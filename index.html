@@ -30,7 +30,6 @@
 
   <main>
     <section id="ranking" class="panel is-active" role="tabpanel">
-      <div id="podio" class="podio"></div>
       <div class="board">
         <div class="board__head">
           <h2>Tabla de posiciones</h2>
@@ -49,7 +48,7 @@
                 <th title="Partidos perdidos">PP</th>
                 <th title="Diferencia de gol" class="c-opt">DG</th>
                 <th title="Efectividad: puntos obtenidos / puntos posibles" class="c-opt">EF%</th>
-                <th title="Últimos 5 partidos" class="c-forma">Últimos 5</th>
+                <th title="Últimos 5 partidos" class="c-forma"><span class="solo-desk">Últimos 5</span><span class="solo-mob">Forma</span></th>
               </tr>
             </thead>
             <tbody id="tabla-body"></tbody>
@@ -57,6 +56,7 @@
         </div>
         <p class="hint">Tocá un jugador para ver sus partidos. Los que todavía no jugaron aparecen al final con “–”.</p>
       </div>
+      <div id="podio" class="podio"></div>
     </section>
 
     <section id="partidos" class="panel" role="tabpanel" hidden>
