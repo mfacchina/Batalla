@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Batalla · Fútbol 5</title>
+  <meta name="description" content="Ranking de jugadores de fútbol 5: 3 puntos por partido ganado, 1 por empate, 0 por derrota.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__lines" aria-hidden="true"></div>
+    <div class="hero__content">
+      <p class="hero__kicker">⚽ Torneo de fútbol 5</p>
+      <h1 class="hero__title" id="titulo">Batalla</h1>
+      <div class="hero__stats" id="resumen"></div>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab is-active" role="tab" data-tab="ranking" aria-selected="true">🏆 Ranking</button>
+    <button class="tab" role="tab" data-tab="partidos" aria-selected="false">📋 Partidos</button>
+    <button class="tab" role="tab" data-tab="reglas" aria-selected="false">📖 Reglamento</button>
+  </nav>
+
+  <main>
+    <section id="ranking" class="panel is-active" role="tabpanel">
+      <div id="podio" class="podio"></div>
+      <div class="board">
+        <div class="board__head">
+          <h2>Tabla de posiciones</h2>
+          <input id="buscar" class="search" type="search" placeholder="Buscar jugador…" autocomplete="off">
+        </div>
+        <div class="table-wrap">
+          <table class="tabla">
+            <thead>
+              <tr>
+                <th class="c-pos">#</th>
+                <th class="c-name">Jugador</th>
+                <th title="Puntos" class="c-pts">PTS</th>
+                <th title="Partidos jugados">PJ</th>
+                <th title="Partidos ganados">PG</th>
+                <th title="Partidos empatados">PE</th>
+                <th title="Partidos perdidos">PP</th>
+                <th title="Diferencia de gol" class="c-opt">DG</th>
+                <th title="Efectividad: puntos obtenidos / puntos posibles" class="c-opt">EF%</th>
+                <th title="Últimos 5 partidos" class="c-forma">Últimos 5</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-body"></tbody>
+          </table>
+        </div>
+        <p class="hint">Tocá un jugador para ver sus partidos.</p>
+      </div>
+    </section>
+
+    <section id="partidos" class="panel" role="tabpanel" hidden>
+      <div class="filtro" id="filtro" hidden>
+        <span>Partidos de <strong id="filtro-nombre"></strong></span>
+        <button id="filtro-quitar" class="chip">✕ Ver todos</button>
+      </div>
+      <div id="lista-partidos" class="partidos"></div>
+    </section>
+
+    <section id="reglas" class="panel" role="tabpanel" hidden>
+      <div class="board reglas">
+        <h2>Reglamento del ranking</h2>
+        <ul class="puntos">
+          <li><span class="badge g">G</span> Partido ganado <strong>3 pts</strong></li>
+          <li><span class="badge e">E</span> Partido empatado <strong>1 pt</strong></li>
+          <li><span class="badge p">P</span> Partido perdido <strong>0 pts</strong></li>
+        </ul>
+        <p>Cada jugador suma los puntos que obtiene su equipo en cada partido que juega.</p>
+        <h3>Criterios de desempate</h3>
+        <ol>
+          <li>Puntos</li>
+          <li>Partidos ganados</li>
+          <li>Diferencia de gol</li>
+          <li>Efectividad (menos partidos jugados para los mismos puntos)</li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span id="actualizado"></span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
