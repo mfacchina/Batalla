@@ -363,7 +363,8 @@ main { max-width: 1040px; margin: 0 auto; padding: 24px 16px 40px; }
   color: var(--oro);
   box-shadow: inset 0 0 12px rgba(245, 197, 66, 0.15);
 }
-.marcador i { font-style: normal; color: var(--texto-suave); }
+.marcador { flex-direction: column; gap: 2px; }
+.marcador small { font-family: 'Inter', sans-serif; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--texto-suave); }
 .marcador .sin-goles { font-size: 1.3rem; color: var(--tiza); }
 
 /* ---------- Reglamento ---------- */

@@ -18,15 +18,16 @@ function formatearFecha(iso) {
   return `${d} ${MESES[m - 1]} ${a}`;
 }
 
-// Devuelve "A", "B" o "empate". Usa `resultado` si está, si no lo deduce de los goles.
+// Devuelve "A", "B" o "empate"
 function resultadoDe(partido) {
-  if (partido.resultado) return partido.resultado === 'empate' ? 'empate' : partido.resultado.toUpperCase();
-  const [a, b] = partido.equipos;
-  if (a.goles == null || b.goles == null) throw new Error(`Partido del ${partido.fecha} sin goles ni resultado`);
-  if (a.goles > b.goles) return 'A';
-  if (b.goles > a.goles) return 'B';
-  return 'empate';
+  const r = String(partido.resultado || '').trim().toLowerCase();
+  if (r === 'empate') return 'empate';
+  if (r === 'a' || r === 'b') return r.toUpperCase();
+  throw new Error(`Partido del ${partido.fecha} sin resultado válido`);
 }
+
+// Diferencia de gol del partido (0 en empate)
+const diferenciaDe = (partido) => (resultadoDe(partido) === 'empate' ? 0 : Math.abs(Number(partido.diferencia) || 0));
 
 const nuevoJugador = (nombre) => ({ nombre: nombre.trim(), pj: 0, pg: 0, pe: 0, pp: 0, pts: 0, dg: 0, forma: [] });
 
@@ -38,10 +39,9 @@ function calcularRanking(partidos, plantel = []) {
 
   for (const partido of ordenados) {
     const res = resultadoDe(partido);
-    const conGoles = partido.equipos.every((e) => e.goles != null);
+    const dif = diferenciaDe(partido);
 
     partido.equipos.forEach((equipo, i) => {
-      const rival = partido.equipos[1 - i];
       const letra = i === 0 ? 'A' : 'B';
       const r = res === 'empate' ? 'E' : res === letra ? 'G' : 'P';
 
@@ -56,7 +56,7 @@ function calcularRanking(partidos, plantel = []) {
         if (r === 'G') j.pg++;
         else if (r === 'E') j.pe++;
         else j.pp++;
-        if (conGoles) j.dg += equipo.goles - rival.goles;
+        j.dg += r === 'G' ? dif : r === 'P' ? -dif : 0;
         j.forma.push(r);
       }
     });
@@ -77,13 +77,11 @@ function calcularRanking(partidos, plantel = []) {
 
 function renderResumen(data, ranking) {
   const partidos = data.partidos;
-  const goles = partidos.reduce((t, p) => t + p.equipos.reduce((s, e) => s + (e.goles || 0), 0), 0);
   const fechas = new Set(partidos.map((p) => p.fecha)).size;
   $('#resumen').innerHTML = [
     ['Fechas', fechas],
     ['Partidos', partidos.length],
     ['Jugadores', ranking.length],
-    ['Goles', goles],
   ].map(([label, valor]) => `<div class="stat"><b>${valor}</b><span>${label}</span></div>`).join('');
 
   if (partidos.length) {
@@ -190,9 +188,10 @@ function renderPartidos(partidos, jugador = null) {
     const res = resultadoDe(p);
     const [a, b] = p.equipos;
     const estado = (letra) => (res === 'empate' ? 'empate' : res === letra ? 'ganador' : 'perdedor');
-    const marcador = a.goles != null && b.goles != null
-      ? `<span>${a.goles}</span><i>-</i><span>${b.goles}</span>`
-      : `<span class="sin-goles">${res === 'empate' ? 'Empate' : 'Final'}</span>`;
+    const dif = diferenciaDe(p);
+    const marcador = res === 'empate'
+      ? `<span class="sin-goles">Empate</span>`
+      : `<span>+${dif}</span><small>Ganó ${esc((res === 'A' ? a : b).nombre || `Equipo ${res}`)}</small>`;
     const equipoHtml = (e, letra) => `
       <div class="equipo equipo--${estado(letra)}">
         <h3>${esc(e.nombre || `Equipo ${letra}`)}${estado(letra) === 'ganador' ? ' 🏆' : ''}</h3>

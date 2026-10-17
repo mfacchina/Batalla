@@ -33,19 +33,22 @@ Agregar un objeto al array `partidos` de `data/partidos.json`:
 
 ```json
 {
-  "fecha": "2026-10-21",
-  "nota": "Opcional, ej: Cancha 3",
+  "fecha": "2026-10-23",
   "equipos": [
-    { "nombre": "Blancos", "jugadores": ["Mati", "Juan", "Pedro", "Lucas", "Nico"], "goles": 6 },
-    { "nombre": "Negros",  "jugadores": ["Tomi", "Fede", "Santi", "Gonza", "Leo"],  "goles": 4 }
-  ]
+    { "nombre": "Equipo 1", "jugadores": ["Juan Molle", "Pal", "Bocha", "Mona", "Ferre"] },
+    { "nombre": "Equipo 2", "jugadores": ["Juanse", "Pipi", "Bau", "Manuco", "Mingro"] }
+  ],
+  "resultado": "A",
+  "diferencia": 3
 }
 ```
 
 - `fecha`: formato `AAAA-MM-DD`. Puede haber varios partidos en la misma fecha.
-- `goles`: opcional. Si no se saben los goles, omitirlos y usar `"resultado": "A"`, `"B"` o `"empate"`
-  (`A` = primer equipo, `B` = segundo).
-- Los nombres se comparan sin distinguir mayúsculas/minúsculas, pero conviene escribirlos siempre igual.
+- `resultado`: `"A"` (ganó el primer equipo), `"B"` (ganó el segundo) o `"empate"`.
+- `diferencia`: por cuántos goles ganó (no se registran los goles de cada equipo). En empate se omite.
+  Suma a la DG de cada jugador: +N a los ganadores, −N a los perdedores.
+- `nota`: opcional, texto libre.
+- Los nombres tienen que coincidir con los de `jugadores` (no distingue mayúsculas/minúsculas).
 
 ## Ver localmente
 
