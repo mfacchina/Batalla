@@ -1,4 +1,28 @@
 {
   "torneo": "Batalla · Fútbol 5",
+  "temporada": {
+    "nombre": "Temporada 2026",
+    "fin": "2026-12-31"
+  },
+  "jugadores": [
+    "Mati Facchina",
+    "Juan Molle",
+    "Manuel Romero",
+    "Matias Balanho",
+    "Mingro",
+    "Pal",
+    "Viegass",
+    "Bau",
+    "Bocha",
+    "Fer Groesmann",
+    "Ferre",
+    "Guido Ramirez",
+    "Juan Pando",
+    "Juanse",
+    "Ludueña Chiqui",
+    "Manuco",
+    "Mona",
+    "Pipi"
+  ],
   "partidos": []
 }

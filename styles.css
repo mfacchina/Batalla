@@ -99,6 +99,21 @@ h1, h2, h3, .tab, .pos, .c-pts, .marcador, .stat b, .podio__pts, .podio__block {
 .stat b { font-size: 2rem; line-height: 1; color: var(--tiza); }
 .stat span { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--texto-suave); }
 
+.temporada {
+  display: inline-block;
+  margin: 18px 0 0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--borde);
+}
+.temporada[hidden] { display: none; }
+.temporada b { color: var(--oro); }
+.temporada--fin { background: var(--oro); color: var(--tablero); border-color: var(--oro); }
+.temporada--fin b { color: var(--tablero); }
+
 /* ---------- Tabs ---------- */
 .tabs {
   position: sticky;

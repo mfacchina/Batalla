@@ -28,8 +28,12 @@ function resultadoDe(partido) {
   return 'empate';
 }
 
-function calcularRanking(partidos) {
+const nuevoJugador = (nombre) => ({ nombre: nombre.trim(), pj: 0, pg: 0, pe: 0, pp: 0, pts: 0, dg: 0, forma: [] });
+
+function calcularRanking(partidos, plantel = []) {
   const jugadores = new Map();
+  // El plantel aparece en la tabla aunque todavía no haya jugado
+  for (const nombre of plantel) jugadores.set(clave(nombre), nuevoJugador(nombre));
   const ordenados = [...partidos].sort((x, y) => x.fecha.localeCompare(y.fecha));
 
   for (const partido of ordenados) {
@@ -44,7 +48,7 @@ function calcularRanking(partidos) {
       for (const nombre of equipo.jugadores) {
         const k = clave(nombre);
         if (!jugadores.has(k)) {
-          jugadores.set(k, { nombre: nombre.trim(), pj: 0, pg: 0, pe: 0, pp: 0, pts: 0, dg: 0, forma: [] });
+          jugadores.set(k, nuevoJugador(nombre));
         }
         const j = jugadores.get(k);
         j.pj++;
@@ -60,11 +64,13 @@ function calcularRanking(partidos) {
 
   const lista = [...jugadores.values()].map((j) => ({ ...j, ef: j.pj ? j.pts / (j.pj * 3) : 0 }));
   const comparar = (a, b) => b.pts - a.pts || b.pg - a.pg || b.dg - a.dg || b.ef - a.ef;
-  lista.sort((a, b) => comparar(a, b) || a.nombre.localeCompare(b.nombre, 'es'));
+  // Los que todavía no jugaron van al fondo, sin posición
+  lista.sort((a, b) => (b.pj > 0) - (a.pj > 0) || comparar(a, b) || a.nombre.localeCompare(b.nombre, 'es'));
 
   // Posiciones compartidas cuando todos los criterios de desempate coinciden
   lista.forEach((j, i) => {
-    j.pos = i > 0 && comparar(lista[i - 1], j) === 0 ? lista[i - 1].pos : i + 1;
+    if (!j.pj) j.pos = null;
+    else j.pos = i > 0 && comparar(lista[i - 1], j) === 0 ? lista[i - 1].pos : i + 1;
   });
   return lista;
 }
@@ -86,8 +92,34 @@ function renderResumen(data, ranking) {
   }
 }
 
+// Devuelve días que faltan para el cierre (0 = último día) o negativo si ya terminó
+function diasParaCierre(fin) {
+  const [a, m, d] = fin.split('-').map(Number);
+  const hoy = new Date();
+  const inicioHoy = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+  return Math.round((new Date(a, m - 1, d) - inicioHoy) / 86400000);
+}
+
+function renderTemporada(temporada, ranking) {
+  const el = $('#temporada');
+  if (!temporada || !temporada.fin) return;
+  const dias = diasParaCierre(temporada.fin);
+  const nombre = esc(temporada.nombre || 'Temporada');
+  if (dias >= 0) {
+    const quedan = dias === 0 ? '¡Último día!' : `Quedan <b>${dias}</b> ${dias === 1 ? 'día' : 'días'}`;
+    el.innerHTML = `${nombre} · cierra el ${formatearFecha(temporada.fin)} · ${quedan}`;
+  } else {
+    const campeones = ranking.filter((j) => j.pos === 1).map((j) => esc(j.nombre));
+    el.innerHTML = campeones.length
+      ? `🏆 ${nombre} finalizada · ${campeones.length > 1 ? 'Campeones' : 'Campeón'}: <b>${campeones.join(', ')}</b>`
+      : `${nombre} finalizada`;
+    el.classList.add('temporada--fin');
+  }
+  el.hidden = false;
+}
+
 function renderPodio(ranking) {
-  const top = ranking.slice(0, 3);
+  const top = ranking.filter((j) => j.pj > 0).slice(0, 3);
   if (!top.length) {
     $('#podio').innerHTML = '';
     return;
@@ -123,15 +155,15 @@ function renderTabla(ranking, filtro = '') {
   }
   body.innerHTML = filas.map((j) => `
     <tr class="fila ${j.pos <= 3 ? `top top-${j.pos}` : ''}" data-jugador="${esc(j.nombre)}" tabindex="0">
-      <td class="c-pos"><span class="pos">${j.pos}</span></td>
+      <td class="c-pos"><span class="pos">${j.pos ?? '–'}</span></td>
       <td class="c-name">${esc(j.nombre)}</td>
       <td class="c-pts">${j.pts}</td>
       <td>${j.pj}</td>
       <td>${j.pg}</td>
       <td>${j.pe}</td>
       <td>${j.pp}</td>
-      <td class="c-opt">${j.dg > 0 ? '+' : ''}${j.dg}</td>
-      <td class="c-opt">${Math.round(j.ef * 100)}%</td>
+      <td class="c-opt">${j.pj ? `${j.dg > 0 ? '+' : ''}${j.dg}` : '–'}</td>
+      <td class="c-opt">${j.pj ? `${Math.round(j.ef * 100)}%` : '–'}</td>
       <td class="c-forma">${j.forma.slice(-5).map((r) => `<span class="badge ${r.toLowerCase()}">${r}</span>`).join('')}</td>
     </tr>`).join('');
 }
@@ -139,6 +171,10 @@ function renderTabla(ranking, filtro = '') {
 function renderPartidos(partidos, jugador = null) {
   const cont = $('#lista-partidos');
   const k = jugador && clave(jugador);
+  if (!partidos.length) {
+    cont.innerHTML = `<p class="vacio board">Todavía no hay partidos cargados.</p>`;
+    return;
+  }
   const lista = [...partidos]
     .map((p, i) => ({ ...p, _i: i }))
     .filter((p) => !k || p.equipos.some((e) => e.jugadores.some((n) => clave(n) === k)))
@@ -146,7 +182,7 @@ function renderPartidos(partidos, jugador = null) {
     .sort((x, y) => y.fecha.localeCompare(x.fecha) || y._i - x._i);
 
   if (!lista.length) {
-    cont.innerHTML = `<p class="vacio board">Todavía no hay partidos cargados.</p>`;
+    cont.innerHTML = `<p class="vacio board">${esc(jugador)} todavía no jugó ningún partido.</p>`;
     return;
   }
 
@@ -215,8 +251,9 @@ async function init() {
     document.title = data.torneo;
   }
 
-  const ranking = calcularRanking(data.partidos);
+  const ranking = calcularRanking(data.partidos, data.jugadores);
   renderResumen(data, ranking);
+  renderTemporada(data.temporada, ranking);
   renderPodio(ranking);
   renderTabla(ranking);
   renderPartidos(data.partidos);
