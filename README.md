@@ -50,6 +50,11 @@ Agregar un objeto al array `partidos` de `data/partidos.json`:
 - `nota`: opcional, texto libre.
 - Los nombres tienen que coincidir con los de `jugadores` (no distingue mayúsculas/minúsculas).
 
+## Caché
+
+GitHub Pages cachea los archivos ~10 minutos. `data/partidos.json` se pide siempre fresco,
+pero al cambiar `app.js` o `styles.css` hay que subir la versión (`?v=...`) en `index.html`.
+
 ## Ver localmente
 
 ```bash
