@@ -29,9 +29,16 @@ function resultadoDe(partido) {
 // Diferencia de gol del partido (0 en empate)
 const diferenciaDe = (partido) => (resultadoDe(partido) === 'empate' ? 0 : Math.abs(Number(partido.diferencia) || 0));
 
-const nuevoJugador = (nombre) => ({ nombre: nombre.trim(), pj: 0, pg: 0, pe: 0, pp: 0, pts: 0, dg: 0, forma: [] });
+const nuevoJugador = (nombre) => ({
+  nombre: nombre.trim(), pj: 0, pg: 0, pe: 0, pp: 0, pts: 0, dg: 0, forma: [], fechas: new Set(),
+});
 
-function calcularRanking(partidos, plantel = []) {
+const fmt = (n, dec = 2) => n.toFixed(dec).replace('.', ',');
+
+// Fecha de oro: los puntos de ese partido valen doble
+const esDeOro = (fecha, fechasDeOro) => fechasDeOro.includes(fecha);
+
+function calcularRanking(partidos, plantel = [], fechasDeOro = []) {
   const jugadores = new Map();
   // El plantel aparece en la tabla aunque todavía no haya jugado
   for (const nombre of plantel) jugadores.set(clave(nombre), nuevoJugador(nombre));
@@ -40,6 +47,7 @@ function calcularRanking(partidos, plantel = []) {
   for (const partido of ordenados) {
     const res = resultadoDe(partido);
     const dif = diferenciaDe(partido);
+    const oro = esDeOro(partido.fecha, fechasDeOro);
 
     partido.equipos.forEach((equipo, i) => {
       const letra = i === 0 ? 'A' : 'B';
@@ -52,18 +60,27 @@ function calcularRanking(partidos, plantel = []) {
         }
         const j = jugadores.get(k);
         j.pj++;
-        j.pts += PUNTOS[r];
+        j.pts += PUNTOS[r] * (oro ? 2 : 1);
         if (r === 'G') j.pg++;
         else if (r === 'E') j.pe++;
         else j.pp++;
         j.dg += r === 'G' ? dif : r === 'P' ? -dif : 0;
-        j.forma.push(r);
+        j.forma.push({ r, oro });
+        j.fechas.add(partido.fecha);
       }
     });
   }
 
-  const lista = [...jugadores.values()].map((j) => ({ ...j, ef: j.pj ? j.pts / (j.pj * 3) : 0 }));
-  const comparar = (a, b) => b.pts - a.pts || b.pg - a.pg || b.dg - a.dg || b.ef - a.ef;
+  // Índice Batalla = promedio de puntos × √asistencia
+  const totalFechas = new Set(partidos.map((p) => p.fecha)).size;
+  const lista = [...jugadores.values()].map((j) => {
+    const prom = j.pj ? j.pts / j.pj : 0;
+    const asist = totalFechas ? j.fechas.size / totalFechas : 0;
+    return { ...j, prom, asist, indice: prom * Math.sqrt(asist) };
+  });
+  // Se compara redondeado para que dos índices que se ven iguales empaten
+  const r3 = (n) => Math.round(n * 1000);
+  const comparar = (a, b) => r3(b.indice) - r3(a.indice) || b.pj - a.pj || b.pts - a.pts || b.dg - a.dg;
   // Los que todavía no jugaron van al fondo, sin posición
   lista.sort((a, b) => (b.pj > 0) - (a.pj > 0) || comparar(a, b) || a.nombre.localeCompare(b.nombre, 'es'));
 
@@ -96,6 +113,19 @@ function diasParaCierre(fin) {
   const hoy = new Date();
   const inicioHoy = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
   return Math.round((new Date(a, m - 1, d) - inicioHoy) / 86400000);
+}
+
+const fechasDeOroDe = (data) => (data.temporada && data.temporada.fechasDeOro) || [];
+
+function renderProximaOro(fechasDeOro) {
+  const el = $('#prox-oro');
+  const proximas = fechasDeOro.filter((f) => diasParaCierre(f) >= 0).sort();
+  if (!proximas.length) return;
+  const dias = diasParaCierre(proximas[0]);
+  el.innerHTML = dias === 0
+    ? '⭐ <b>¡Hoy es fecha de oro!</b> Los puntos valen doble'
+    : `⭐ Próxima fecha de oro: <b>${formatearFecha(proximas[0])}</b> · puntos x2`;
+  el.hidden = false;
 }
 
 function renderTemporada(temporada, ranking) {
@@ -133,7 +163,8 @@ function renderPodio(ranking) {
       <div class="podio__item podio__item--${i + 1} podio__lugar--${lugar}">
         <div class="podio__medal">${medallas[lugar - 1]}</div>
         <div class="podio__name">${esc(j.nombre)}</div>
-        <div class="podio__pts">${j.pts} <small>pts</small></div>
+        <div class="podio__pts">${fmt(j.indice)} <small>índice</small></div>
+        <div class="podio__sub">${j.pts} pts · ${j.pj} PJ</div>
         <div class="podio__block">${j.pos}</div>
       </div>`;
   }).join('');
@@ -142,31 +173,33 @@ function renderPodio(ranking) {
 function renderTabla(ranking, filtro = '') {
   const body = $('#tabla-body');
   if (!ranking.length) {
-    body.innerHTML = `<tr><td colspan="10" class="vacio">Todavía no hay partidos cargados. ¡Que ruede la pelota! ⚽</td></tr>`;
+    body.innerHTML = `<tr><td colspan="12" class="vacio">Todavía no hay partidos cargados. ¡Que ruede la pelota! ⚽</td></tr>`;
     return;
   }
   const f = clave(filtro);
   const filas = ranking.filter((j) => !f || clave(j.nombre).includes(f));
   if (!filas.length) {
-    body.innerHTML = `<tr><td colspan="10" class="vacio">Ningún jugador coincide con “${esc(filtro)}”.</td></tr>`;
+    body.innerHTML = `<tr><td colspan="12" class="vacio">Ningún jugador coincide con “${esc(filtro)}”.</td></tr>`;
     return;
   }
   body.innerHTML = filas.map((j) => `
     <tr class="fila ${j.pos <= 3 ? `top top-${j.pos}` : ''}" data-jugador="${esc(j.nombre)}" tabindex="0">
       <td class="c-pos"><span class="pos">${j.pos ?? '–'}</span></td>
       <td class="c-name">${esc(j.nombre)}</td>
-      <td class="c-pts">${j.pts}</td>
+      <td class="c-ind">${j.pj ? fmt(j.indice) : '–'}</td>
+      <td>${j.pts}</td>
       <td>${j.pj}</td>
-      <td>${j.pg}</td>
-      <td>${j.pe}</td>
-      <td>${j.pp}</td>
+      <td class="c-opt">${j.pg}</td>
+      <td class="c-opt">${j.pe}</td>
+      <td class="c-opt">${j.pp}</td>
       <td class="c-opt">${j.pj ? `${j.dg > 0 ? '+' : ''}${j.dg}` : '–'}</td>
-      <td class="c-opt">${j.pj ? `${Math.round(j.ef * 100)}%` : '–'}</td>
-      <td class="c-forma">${j.forma.slice(-5).map((r) => `<span class="badge ${r.toLowerCase()}">${r}</span>`).join('')}</td>
+      <td class="c-opt">${j.pj ? fmt(j.prom) : '–'}</td>
+      <td class="c-opt">${j.pj ? `${Math.round(j.asist * 100)}%` : '–'}</td>
+      <td class="c-forma">${j.forma.slice(-5).map(({ r, oro }) => `<span class="badge ${r.toLowerCase()}${oro ? ' oro' : ''}"${oro ? ' title="Fecha de oro"' : ''}>${r}</span>`).join('')}</td>
     </tr>`).join('');
 }
 
-function renderPartidos(partidos, jugador = null) {
+function renderPartidos(partidos, fechasDeOro, jugador = null) {
   const cont = $('#lista-partidos');
   const k = jugador && clave(jugador);
   if (!partidos.length) {
@@ -197,10 +230,11 @@ function renderPartidos(partidos, jugador = null) {
         <h3>${esc(e.nombre || `Equipo ${letra}`)}${estado(letra) === 'ganador' ? ' 🏆' : ''}</h3>
         <ul>${e.jugadores.map((n) => `<li class="${k && clave(n) === k ? 'yo' : ''}">${esc(n.trim())}</li>`).join('')}</ul>
       </div>`;
+    const oro = esDeOro(p.fecha, fechasDeOro);
     return `
-      <article class="partido">
+      <article class="partido${oro ? ' partido--oro' : ''}">
         <header class="partido__head">
-          <span>📅 ${formatearFecha(p.fecha)}</span>
+          <span>📅 ${formatearFecha(p.fecha)}${oro ? ' · <b class="oro-tag">⭐ Fecha de oro · puntos x2</b>' : ''}</span>
           ${p.nota ? `<span class="nota">${esc(p.nota)}</span>` : ''}
         </header>
         <div class="partido__body">
@@ -226,7 +260,7 @@ function activarTab(nombre) {
 }
 
 function filtrarPartidosPor(data, jugador) {
-  renderPartidos(data.partidos, jugador);
+  renderPartidos(data.partidos, fechasDeOroDe(data), jugador);
   $('#filtro').hidden = !jugador;
   $('#filtro-nombre').textContent = jugador || '';
   activarTab('partidos');
@@ -241,7 +275,7 @@ async function init() {
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     data = await resp.json();
   } catch (err) {
-    $('#tabla-body').innerHTML = `<tr><td colspan="10" class="vacio">No se pudieron cargar los partidos (${esc(err.message)}).</td></tr>`;
+    $('#tabla-body').innerHTML = `<tr><td colspan="12" class="vacio">No se pudieron cargar los partidos (${esc(err.message)}).</td></tr>`;
     return;
   }
 
@@ -250,12 +284,14 @@ async function init() {
     document.title = data.torneo;
   }
 
-  const ranking = calcularRanking(data.partidos, data.jugadores);
+  const fechasDeOro = fechasDeOroDe(data);
+  const ranking = calcularRanking(data.partidos, data.jugadores, fechasDeOro);
   renderResumen(data, ranking);
   renderTemporada(data.temporada, ranking);
+  renderProximaOro(fechasDeOro);
   renderPodio(ranking);
   renderTabla(ranking);
-  renderPartidos(data.partidos);
+  renderPartidos(data.partidos, fechasDeOro);
 
   document.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => activarTab(t.dataset.tab)));
   $('#buscar').addEventListener('input', (e) => renderTabla(ranking, e.target.value));

@@ -11,7 +11,13 @@ Ranking de jugadores de fútbol 5, hosteado en GitHub Pages.
 | Perdido   | 0      |
 
 Cada jugador suma los puntos de su equipo en cada partido que juega.
-Desempate: puntos → partidos ganados → diferencia de gol → efectividad.
+
+**Índice Batalla = promedio de puntos × √asistencia** (asistencia = fechas jugadas ÷ fechas totales).
+Orden de la tabla: índice → partidos jugados → puntos → diferencia de gol.
+
+**Fechas de oro:** los puntos de esos partidos valen doble (la DG no). Se configuran en
+`temporada.fechasDeOro` de `data/partidos.json`, por ejemplo `["2026-11-20"]`, y la página
+anuncia la próxima arriba de la tabla.
 
 ## Arquitectura
 

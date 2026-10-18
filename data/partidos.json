@@ -2,7 +2,8 @@
   "torneo": "Batalla · Fútbol 5",
   "temporada": {
     "nombre": "Temporada 2026",
-    "fin": "2026-12-31"
+    "fin": "2026-12-31",
+    "fechasDeOro": []
   },
   "jugadores": [
     "Facchina",

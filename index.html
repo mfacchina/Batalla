@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2026-10-17.2">
+  <link rel="stylesheet" href="styles.css?v=2026-10-18.1">
 </head>
 <body>
   <header class="hero">
@@ -19,6 +19,7 @@
       <h1 class="hero__title" id="titulo">Batalla</h1>
       <div class="hero__stats" id="resumen"></div>
       <p class="temporada" id="temporada" hidden></p>
+      <p class="temporada temporada--oro" id="prox-oro" hidden></p>
     </div>
   </header>
 
@@ -41,20 +42,22 @@
               <tr>
                 <th class="c-pos">#</th>
                 <th class="c-name">Jugador</th>
-                <th title="Puntos" class="c-pts">PTS</th>
+                <th title="Índice Batalla = promedio × √asistencia" class="c-ind"><span class="solo-desk">Índice</span><span class="solo-mob">Índ.</span></th>
+                <th title="Puntos">PTS</th>
                 <th title="Partidos jugados">PJ</th>
-                <th title="Partidos ganados">PG</th>
-                <th title="Partidos empatados">PE</th>
-                <th title="Partidos perdidos">PP</th>
+                <th title="Partidos ganados" class="c-opt">PG</th>
+                <th title="Partidos empatados" class="c-opt">PE</th>
+                <th title="Partidos perdidos" class="c-opt">PP</th>
                 <th title="Diferencia de gol" class="c-opt">DG</th>
-                <th title="Efectividad: puntos obtenidos / puntos posibles" class="c-opt">EF%</th>
+                <th title="Promedio de puntos por partido" class="c-opt">Prom.</th>
+                <th title="Asistencia: fechas jugadas / fechas totales" class="c-opt">Asist.</th>
                 <th title="Últimos 5 partidos" class="c-forma"><span class="solo-desk">Últimos 5</span><span class="solo-mob">Forma</span></th>
               </tr>
             </thead>
             <tbody id="tabla-body"></tbody>
           </table>
         </div>
-        <p class="hint">Tocá un jugador para ver sus partidos. Los que todavía no jugaron aparecen al final con “–”.</p>
+        <p class="hint">Ordenado por <b>Índice Batalla</b> (ver Reglamento). ⭐ = fecha de oro. Tocá un jugador para ver sus partidos.</p>
       </div>
       <div id="podio" class="podio"></div>
     </section>
@@ -77,19 +80,29 @@
         </ul>
         <p>Cada jugador suma los puntos que obtiene su equipo en cada partido que juega.</p>
         <p>No se registran los goles de cada equipo, solo la diferencia: por cuántos goles ganó el ganador.</p>
+        <h3>⭐ Fechas de oro</h3>
+        <p>En las fechas de oro los puntos valen <strong>doble</strong>: ganar da 6 pts, empatar 2 y perder 0. La diferencia de gol no se duplica. Las fechas de oro se anuncian arriba de la tabla.</p>
+        <h3>🏆 Índice Batalla</h3>
+        <p>La tabla se ordena por el Índice Batalla, que combina cuánto ganás con cuánto venís:</p>
+        <p class="formula">Índice = Promedio × √Asistencia</p>
+        <ul>
+          <li><strong>Promedio:</strong> puntos ÷ partidos jugados.</li>
+          <li><strong>Asistencia:</strong> fechas jugadas ÷ fechas totales de la temporada.</li>
+        </ul>
+        <p>El que va siempre conserva su promedio entero. El que falta pierde de a poco: con 50% de asistencia su promedio vale el 71%, y con 20% vale el 45%. Ir pocas veces y ganar no alcanza para quedar arriba.</p>
         <h3>Cómo se arma cada fecha</h3>
         <ol>
           <li>Durante la semana se hace la votación en el grupo.</li>
           <li>Los primeros 10 que se anotan juegan.</li>
           <li>Se arman dos equipos de 5 y se juega el partido.</li>
-          <li>Los que no juegan esa semana no suman ni restan.</li>
+          <li>Los que no juegan esa semana no suman puntos y les baja la asistencia.</li>
         </ol>
-        <h3>Criterios de desempate</h3>
+        <h3>Orden de la tabla</h3>
         <ol>
+          <li>Índice Batalla</li>
+          <li>Partidos jugados (gana el que fue más veces)</li>
           <li>Puntos</li>
-          <li>Partidos ganados</li>
           <li>Diferencia de gol (suma la diferencia de cada partido: +N si ganó, −N si perdió)</li>
-          <li>Efectividad (menos partidos jugados para los mismos puntos)</li>
         </ol>
       </div>
     </section>
@@ -99,6 +112,6 @@
     <span id="actualizado"></span>
   </footer>
 
-  <script src="app.js?v=2026-10-17.2"></script>
+  <script src="app.js?v=2026-10-18.1"></script>
 </body>
 </html>

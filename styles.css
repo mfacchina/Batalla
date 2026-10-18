@@ -111,6 +111,8 @@ h1, h2, h3, .tab, .pos, .c-pts, .marcador, .stat b, .podio__pts, .podio__block {
 }
 .temporada[hidden] { display: none; }
 .temporada b { color: var(--oro); }
+.temporada--oro { display: table; margin: 8px auto 0; border-color: var(--oro); }
+.temporada--oro[hidden] { display: none; }
 .temporada--fin { background: var(--oro); color: var(--tablero); border-color: var(--oro); }
 .temporada--fin b { color: var(--tablero); }
 
@@ -242,7 +244,8 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
   white-space: nowrap;
 }
 .tabla .c-name { text-align: left; font-weight: 600; }
-.tabla .c-pts { font-size: 1.5rem; color: var(--oro); }
+.tabla .c-ind { font-family: 'Bebas Neue', Impact, sans-serif; font-size: 1.5rem; letter-spacing: 0.04em; color: var(--oro); }
+.tabla th.c-ind { font-size: 0.8rem; color: var(--oro); }
 .tabla .c-pos { width: 44px; }
 
 .fila { cursor: pointer; transition: background 0.12s; }
@@ -275,6 +278,7 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
 .badge.g { background: var(--gano); }
 .badge.e { background: var(--empato); }
 .badge.p { background: var(--perdio); }
+.badge.oro { box-shadow: 0 0 0 2px var(--oro); }
 
 .solo-mob { display: none; }
 
@@ -332,6 +336,10 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
   border-bottom: 1px solid var(--borde);
 }
 .nota { font-style: italic; }
+.partido--oro { border: 2px solid var(--oro); box-shadow: 0 0 24px rgba(245, 197, 66, 0.25); }
+.oro-tag { color: var(--oro); }
+.podio__sub { font-size: 0.75rem; color: var(--texto-suave); margin-top: 2px; }
+.formula { font-family: 'Bebas Neue', Impact, sans-serif; font-size: 1.6rem; letter-spacing: 0.04em; color: var(--oro); text-align: center; margin: 10px 0; }
 
 .partido__body {
   display: grid;
@@ -399,7 +407,7 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
   .solo-desk { display: none; }
   .tabla .c-pos { width: 34px; }
   .tabla .c-name { white-space: normal; line-height: 1.2; }
-  .tabla .c-pts { font-size: 1.3rem; }
+  .tabla .c-ind { font-size: 1.3rem; }
   .c-forma { padding-left: 2px !important; padding-right: 0 !important; }
   .badge { width: 15px; height: 17px; margin: 0; font-size: 0.58rem; border-radius: 4px; }
   .podio__block { font-size: 2rem; }
