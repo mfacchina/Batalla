@@ -56,10 +56,47 @@ Agregar un objeto al array `partidos` de `data/partidos.json`:
 - `nota`: opcional, texto libre.
 - Los nombres tienen que coincidir con los de `jugadores` (no distingue mayúsculas/minúsculas).
 
+## Fecha suspendida y baja tarde (W.O.)
+
+Agregar un objeto a `suspendidas`:
+
+```json
+{
+  "fecha": "2026-10-30",
+  "anotados": ["Facchina", "Pal", "Bocha", "Mona", "Ferre", "Pipi", "Bau", "Manuco", "Mingro"],
+  "bajas": ["Juanse"],
+  "nota": "Juanse se bajó y no consiguió reemplazo"
+}
+```
+
+- `anotados`: quedan como presentes (suman asistencia, no puntos ni PJ).
+- `bajas`: baja tarde sin reemplazo → pierde 3-0 (1 PJ, 0 pts, −3 DG), sin asistencia y con una amonestación 🟨.
+- Las suspendidas no cuentan para numerar fechas ni para las fechas de oro.
+
+## Fotos
+
+Guardar la foto en `fotos/` (cuadrada, ~400 px) y mapearla en `fotos` de `data/partidos.json`:
+
+```json
+"fotos": { "Facchina": "fotos/facchina.jpg" }
+```
+
+Sin foto se muestran las iniciales.
+
+## Destacados
+
+Rachas, logros, jugador del mes y récords se calculan solos a partir de los partidos.
+El salón de la fama muestra la temporada actual al cerrarse y las anteriores cargadas en `historial`.
+
+## Archivos
+
+- `calculos.js`: lógica del torneo (tabla, índice, rachas, logros, jugador del mes, récords). Sin DOM.
+- `app.js`: render de la página.
+
 ## Caché
 
 GitHub Pages cachea los archivos ~10 minutos. `data/partidos.json` se pide siempre fresco,
-pero al cambiar `app.js` o `styles.css` hay que subir la versión (`?v=...`) en `index.html`.
+pero al cambiar `app.js`, `calculos.js` o `styles.css` hay que subir la versión (`?v=...`) en `index.html`.
 
 ## Ver localmente
 

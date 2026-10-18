@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2026-10-18.2">
+  <link rel="stylesheet" href="styles.css?v=2026-10-18.5">
 </head>
 <body>
   <header class="hero">
@@ -24,9 +24,10 @@
   </header>
 
   <nav class="tabs" role="tablist">
-    <button class="tab is-active" role="tab" data-tab="ranking" aria-selected="true">🏆 Ranking</button>
+    <button class="tab is-active" role="tab" data-tab="ranking" aria-selected="true">🏆 <span class="solo-desk">Ranking</span><span class="solo-mob">Tabla</span></button>
     <button class="tab" role="tab" data-tab="partidos" aria-selected="false">📋 Partidos</button>
-    <button class="tab" role="tab" data-tab="reglas" aria-selected="false">📖 Reglamento</button>
+    <button class="tab" role="tab" data-tab="destacados" aria-selected="false">⭐ Destacados</button>
+    <button class="tab" role="tab" data-tab="reglas" aria-selected="false">📖 <span class="solo-desk">Reglamento</span><span class="solo-mob">Reglas</span></button>
   </nav>
 
   <main>
@@ -57,7 +58,7 @@
             <tbody id="tabla-body"></tbody>
           </table>
         </div>
-        <p class="hint">Ordenado por <b>Índice Batalla</b> (ver Reglamento). ⭐ = fecha de oro. Tocá un jugador para ver sus partidos.</p>
+        <p class="hint">Ordenado por <b>Índice Batalla</b> (ver Reglamento). ⭐ = fecha de oro. Tocá un jugador para ver su perfil.</p>
       </div>
       <div id="podio" class="podio"></div>
     </section>
@@ -68,6 +69,22 @@
         <button id="filtro-quitar" class="chip">✕ Ver todos</button>
       </div>
       <div id="lista-partidos" class="partidos"></div>
+    </section>
+
+    <section id="destacados" class="panel" role="tabpanel" hidden>
+      <div class="board destacado">
+        <h2>📅 Jugador del mes</h2>
+        <p class="hint hint--left">Mismo Índice Batalla, pero solo con las fechas de ese mes. El premio se define cuando termina el mes.</p>
+        <div id="del-mes"></div>
+      </div>
+      <div class="board destacado">
+        <h2>📈 Récords de la temporada</h2>
+        <div id="records" class="records"></div>
+      </div>
+      <div class="board destacado">
+        <h2>🏛️ Salón de la fama</h2>
+        <div id="salon"></div>
+      </div>
     </section>
 
     <section id="reglas" class="panel" role="tabpanel" hidden>
@@ -98,6 +115,19 @@
           <li>Se arman dos equipos de 5 y se juega el partido.</li>
           <li>Los que no juegan esa semana no suman puntos y les baja la asistencia.</li>
         </ol>
+        <h3>🚫 Fechas suspendidas</h3>
+        <p>Si no se llega a 10 y no se juega, la fecha queda <strong>suspendida</strong>. Los que se anotaron quedan como <strong>presentes</strong>: suman asistencia, pero no puntos ni partidos jugados. Las fechas suspendidas no cuentan para las fechas de oro.</p>
+        <h3>🟨 Baja tarde (W.O.)</h3>
+        <p>Si eran 10, uno se baja, no consigue reemplazo y por eso no se juega, ese jugador <strong>pierde 3-0</strong> (1 partido jugado, 0 puntos, −3 de diferencia de gol), no suma asistencia y recibe una <strong>amonestación 🟨</strong>. Los otros 9 quedan como presentes.</p>
+        <h3>🔥 Rachas</h3>
+        <p>La racha cuenta los partidos seguidos sin perder. A partir de 3, el jugador aparece con 🔥 en la tabla. Un W.O. corta la racha.</p>
+        <h3>🏅 Logros</h3>
+        <p>Se desbloquean solos y se ven en el perfil de cada jugador:</p>
+        <ul id="lista-logros" class="lista-logros"></ul>
+        <h3>📅 Jugador del mes</h3>
+        <p>Se calcula con el mismo Índice Batalla, pero solo con las fechas de ese mes. Se define cuando termina el mes.</p>
+        <h3>🏛️ Salón de la fama</h3>
+        <p>Al cerrar cada temporada quedan grabados el campeón, el podio, la mejor racha, el más presente y los jugadores del mes.</p>
         <h3>Orden de la tabla</h3>
         <ol>
           <li>Índice Batalla</li>
@@ -109,10 +139,18 @@
     </section>
   </main>
 
+  <dialog id="perfil" class="perfil" aria-label="Perfil del jugador">
+    <div class="perfil__inner">
+      <button id="perfil-cerrar" class="perfil__cerrar" aria-label="Cerrar">✕</button>
+      <div id="perfil-contenido"></div>
+    </div>
+  </dialog>
+
   <footer class="footer">
     <span id="actualizado"></span>
   </footer>
 
-  <script src="app.js?v=2026-10-18.2"></script>
+  <script src="calculos.js?v=2026-10-18.5"></script>
+  <script src="app.js?v=2026-10-18.5"></script>
 </body>
 </html>
