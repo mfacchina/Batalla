@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2026-10-18.1">
+  <link rel="stylesheet" href="styles.css?v=2026-10-18.2">
 </head>
 <body>
   <header class="hero">
@@ -81,7 +81,8 @@
         <p>Cada jugador suma los puntos que obtiene su equipo en cada partido que juega.</p>
         <p>No se registran los goles de cada equipo, solo la diferencia: por cuántos goles ganó el ganador.</p>
         <h3>⭐ Fechas de oro</h3>
-        <p>En las fechas de oro los puntos valen <strong>doble</strong>: ganar da 6 pts, empatar 2 y perder 0. La diferencia de gol no se duplica. Las fechas de oro se anuncian arriba de la tabla.</p>
+        <p>Cada <strong><span class="js-oro-cada">3</span> fechas jugadas</strong> hay una fecha de oro (la 3ª, 6ª, 9ª…). Se cuentan las fechas que realmente se juegan: si una semana no hay partido, no cuenta.</p>
+        <p>En las fechas de oro los puntos valen <strong>doble</strong>: ganar da 6 pts, empatar 2 y perder 0. La diferencia de gol no se duplica. Arriba de la tabla se anuncia cuándo es la próxima.</p>
         <h3>🏆 Índice Batalla</h3>
         <p>La tabla se ordena por el Índice Batalla, que combina cuánto ganás con cuánto venís:</p>
         <p class="formula">Índice = Promedio × √Asistencia</p>
@@ -112,6 +113,6 @@
     <span id="actualizado"></span>
   </footer>
 
-  <script src="app.js?v=2026-10-18.1"></script>
+  <script src="app.js?v=2026-10-18.2"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
   "temporada": {
     "nombre": "Temporada 2026",
     "fin": "2026-12-31",
-    "fechasDeOro": []
+    "oroCada": 3
   },
   "jugadores": [
     "Facchina",

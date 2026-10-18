@@ -15,9 +15,9 @@ Cada jugador suma los puntos de su equipo en cada partido que juega.
 **Índice Batalla = promedio de puntos × √asistencia** (asistencia = fechas jugadas ÷ fechas totales).
 Orden de la tabla: índice → partidos jugados → puntos → diferencia de gol.
 
-**Fechas de oro:** los puntos de esos partidos valen doble (la DG no). Se configuran en
-`temporada.fechasDeOro` de `data/partidos.json`, por ejemplo `["2026-11-20"]`, y la página
-anuncia la próxima arriba de la tabla.
+**Fechas de oro:** cada `temporada.oroCada` fechas jugadas (hoy 3: la 3ª, 6ª, 9ª…) los puntos
+valen doble (la DG no). Las fechas se numeran por orden de fecha entre las que tienen partido,
+así que una semana sin partido no cuenta. La página anuncia la próxima arriba de la tabla.
 
 ## Arquitectura
 
