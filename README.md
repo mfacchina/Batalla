@@ -81,7 +81,17 @@ Guardar la foto en `fotos/` (cuadrada, ~400 px) y mapearla en `fotos` de `data/p
 "fotos": { "Facchina": "fotos/facchina.jpg" }
 ```
 
-Sin foto se muestran las iniciales.
+Sin foto se muestran las iniciales. La clave tiene que ser el nombre del jugador tal cual está en `jugadores`.
+
+Para generar la foto con fondo de cancha (recorta, quita el fondo y la pone sobre un estadio):
+
+```bash
+python3 -m venv venv && venv/bin/pip install "rembg[cpu]" pillow scipy
+venv/bin/python tools/foto_cancha.py original.jpg fotos/nombre.jpg [x0 y0 x1 y1]
+```
+
+Los cuatro números opcionales son la caja de recorte (cabeza y hombros) en la foto original.
+Ojo: el repo es público, así que las fotos también.
 
 ## Destacados
 

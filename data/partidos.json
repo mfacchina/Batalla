@@ -25,7 +25,20 @@
     "Mona",
     "Pipi"
   ],
-  "fotos": {},
+  "fotos": {
+    "Ferre": "fotos/ferre.jpg",
+    "Facchina": "fotos/facchina.jpg",
+    "Pal": "fotos/pal.jpg",
+    "Mona": "fotos/mona.jpg",
+    "Juan Pando": "fotos/juan-pando.jpg",
+    "Viegas": "fotos/viegas.jpg",
+    "Matias Balanho": "fotos/matias-balanho.jpg",
+    "Bocha": "fotos/bocha.jpg",
+    "Mingro": "fotos/mingro.jpg",
+    "Juan Molle": "fotos/juan-molle.jpg",
+    "Pipi": "fotos/pipi.jpg",
+    "Bau": "fotos/bau.jpg"
+  },
   "partidos": [],
   "suspendidas": [],
   "historial": []
