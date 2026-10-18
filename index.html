@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2026-10-18.5">
+  <link rel="stylesheet" href="styles.css?v=2026-10-18.6">
 </head>
 <body>
   <header class="hero">
@@ -146,11 +146,26 @@
     </div>
   </dialog>
 
+  <dialog id="celebracion" class="celebracion" aria-label="Logro desbloqueado">
+    <div class="cel__flash"></div>
+    <div class="cel__rayos"></div>
+    <div class="cel__confeti" id="cel-confeti" aria-hidden="true"></div>
+    <div class="cel__card">
+      <p class="cel__kicker">¡Logro desbloqueado!</p>
+      <div class="cel__ico" id="cel-ico"></div>
+      <h2 class="cel__nombre" id="cel-nombre"></h2>
+      <p class="cel__desc" id="cel-desc"></p>
+      <p class="cel__jugador" id="cel-jugador"></p>
+      <button class="chip cel__btn" id="cel-btn">¡Vamos! 💪</button>
+      <p class="cel__contador" id="cel-contador"></p>
+    </div>
+  </dialog>
+
   <footer class="footer">
     <span id="actualizado"></span>
   </footer>
 
-  <script src="calculos.js?v=2026-10-18.5"></script>
-  <script src="app.js?v=2026-10-18.5"></script>
+  <script src="calculos.js?v=2026-10-18.6"></script>
+  <script src="app.js?v=2026-10-18.6"></script>
 </body>
 </html>

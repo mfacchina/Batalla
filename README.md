@@ -88,6 +88,10 @@ Sin foto se muestran las iniciales.
 Rachas, logros, jugador del mes y récords se calculan solos a partir de los partidos.
 El salón de la fama muestra la temporada actual al cerrarse y las anteriores cargadas en `historial`.
 
+**Celebración de logros:** al abrir un perfil con logros que ese navegador todavía no mostró, aparece
+una animación a pantalla completa (uno por uno) y los logros quedan marcados como NUEVO.
+Lo ya celebrado se guarda en `localStorage` (`batalla:logros:<jugador>`), así que es por dispositivo.
+
 ## Archivos
 
 - `calculos.js`: lógica del torneo (tabla, índice, rachas, logros, jugador del mes, récords). Sin DOM.

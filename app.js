@@ -306,6 +306,9 @@ function abrirPerfil(estado, nombre) {
   const j = buscarJugador(tabla, nombre);
   if (!j) return;
   const logros = logrosDe(j, contextoLogros(data, tabla, meses));
+  const vistos = logrosVistos(j.nombre);
+  const nuevos = vistos ? logros.filter((l) => l.logrado && !vistos.has(l.id)) : [];
+  const esNuevo = new Set(nuevos.map((l) => l.id));
   const { dupla, bestia } = cruces(j);
   const evo = evolucion(data, j.nombre).filter((e) => e.pos);
   const ultimos = [...j.forma].reverse().slice(0, 5);
@@ -338,7 +341,7 @@ function abrirPerfil(estado, nombre) {
     <h3>🏅 Logros <small>${logros.filter((l) => l.logrado).length}/${logros.length}</small></h3>
     <div class="logros">
       ${logros.map((l) => `
-        <div class="logro${l.logrado ? ' logro--ok' : ''}" title="${esc(l.desc)}">
+        <div class="logro${l.logrado ? ' logro--ok' : ''}${esNuevo.has(l.id) ? ' logro--nuevo' : ''}" title="${esc(l.desc)}">
           <span class="logro__ico">${l.icono}</span>
           <span class="logro__txt"><b>${esc(l.nombre)}</b><small>${esc(l.desc)}</small></span>
         </div>`).join('')}
@@ -363,6 +366,87 @@ function abrirPerfil(estado, nombre) {
   if (!dlg.open) dlg.showModal();
   dlg.scrollTop = 0;
   history.replaceState(null, '', `#jugador=${encodeURIComponent(j.nombre)}`);
+
+  if (nuevos.length) {
+    guardarVistos(j.nombre, logros.filter((l) => l.logrado).map((l) => l.id));
+    setTimeout(() => celebrar(j.nombre, nuevos), 350);
+  }
+}
+
+// ---------- Celebración de logros nuevos ----------
+
+// Cada navegador recuerda qué logros ya celebró de cada jugador.
+// Si el almacenamiento no está disponible (modo privado), no se celebra para no repetirlo siempre.
+const CLAVE_VISTOS = 'batalla:logros:';
+
+function logrosVistos(nombre) {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(CLAVE_VISTOS + clave(nombre)) || '[]'));
+  } catch {
+    return null;
+  }
+}
+
+function guardarVistos(nombre, ids) {
+  try {
+    localStorage.setItem(CLAVE_VISTOS + clave(nombre), JSON.stringify(ids));
+  } catch {
+    // Sin almacenamiento: no pasa nada
+  }
+}
+
+const COLORES_CONFETI = ['#f5c542', '#ffe08a', '#2fbf5b', '#f4f7f2', '#e0483e', '#5aa9ff'];
+
+function lanzarConfeti(cont) {
+  cont.innerHTML = '';
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  for (let i = 0; i < 90; i++) {
+    const c = document.createElement('i');
+    c.className = 'confeti';
+    c.style.left = `${Math.random() * 100}%`;
+    c.style.background = COLORES_CONFETI[i % COLORES_CONFETI.length];
+    c.style.setProperty('--dur', `${2.2 + Math.random() * 2}s`);
+    c.style.setProperty('--delay', `${0.2 + Math.random() * 0.8}s`);
+    c.style.setProperty('--giro', `${360 + Math.random() * 720}deg`);
+    c.style.setProperty('--deriva', `${(Math.random() - 0.5) * 160}px`);
+    if (i % 3 === 0) c.style.borderRadius = '50%';
+    cont.appendChild(c);
+  }
+}
+
+function celebrar(nombre, nuevos) {
+  const dlg = $('#celebracion');
+  let i = 0;
+  const mostrar = () => {
+    const l = nuevos[i];
+    $('#cel-ico').textContent = l.icono;
+    $('#cel-nombre').textContent = l.nombre;
+    $('#cel-desc').textContent = l.desc;
+    $('#cel-jugador').textContent = nombre;
+    $('#cel-contador').textContent = nuevos.length > 1 ? `${i + 1} de ${nuevos.length}` : '';
+    $('#cel-btn').textContent = i < nuevos.length - 1 ? 'Siguiente logro →' : '¡Vamos! 💪';
+    // Reinicia las animaciones para cada logro
+    dlg.classList.remove('anim');
+    void dlg.offsetWidth;
+    dlg.classList.add('anim');
+    lanzarConfeti($('#cel-confeti'));
+    if (navigator.vibrate) navigator.vibrate([80, 60, 160]);
+  };
+  const avanzar = () => {
+    i++;
+    if (i < nuevos.length) mostrar();
+    else dlg.close();
+  };
+  $('#cel-btn').onclick = avanzar;
+  dlg.onclick = (e) => {
+    if (e.target === dlg) avanzar();
+  };
+  dlg.onclose = () => {
+    dlg.classList.remove('anim');
+    $('#cel-confeti').innerHTML = '';
+  };
+  if (!dlg.open) dlg.showModal();
+  mostrar();
 }
 
 function cerrarPerfil() {

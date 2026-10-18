@@ -532,6 +532,142 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
 .ultimos small { color: var(--texto-suave); }
 .perfil__ver { margin-top: 16px; }
 
+/* ---------- Celebración de logro ---------- */
+.logro--nuevo { position: relative; animation: brillo-nuevo 1.6s ease-in-out infinite; }
+.logro--nuevo::after {
+  content: 'NUEVO';
+  position: absolute;
+  top: -7px;
+  right: 6px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--perdio);
+  color: #fff;
+  font-size: 0.56rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+@keyframes brillo-nuevo {
+  50% { box-shadow: 0 0 18px rgba(245, 197, 66, 0.55); }
+}
+
+.celebracion {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 16px;
+  border: 0;
+  overflow: hidden;
+  color: var(--tiza);
+  background: radial-gradient(circle at 50% 42%, rgba(60, 40, 0, 0.92), rgba(0, 0, 0, 0.96) 70%);
+}
+.celebracion[open] { display: grid; place-items: center; }
+.celebracion::backdrop { background: transparent; }
+
+.cel__flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+.cel__rayos {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: 220vmax;
+  height: 220vmax;
+  margin: -110vmax 0 0 -110vmax;
+  background: repeating-conic-gradient(from 0deg, rgba(245, 197, 66, 0.2) 0deg 8deg, transparent 8deg 18deg);
+  -webkit-mask: radial-gradient(circle, #000 0, transparent 45%);
+  mask: radial-gradient(circle, #000 0, transparent 45%);
+  opacity: 0;
+  pointer-events: none;
+}
+.cel__confeti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.confeti {
+  position: absolute;
+  top: -20px;
+  width: 8px;
+  height: 14px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: caer var(--dur) cubic-bezier(0.25, 0.4, 0.6, 1) var(--delay) forwards;
+}
+@keyframes caer {
+  0% { opacity: 1; transform: translate(0, 0) rotate(0); }
+  85% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--deriva), 105vh) rotate(var(--giro)); }
+}
+
+.cel__card { position: relative; z-index: 1; max-width: 420px; text-align: center; }
+.cel__kicker {
+  margin: 0 0 18px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, var(--oro), #fff6d2, var(--oro));
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.cel__ico {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  border-radius: 50%;
+  font-size: 4.6rem;
+  background: radial-gradient(circle at 35% 30%, #fff3c4, var(--oro) 45%, #a8780f 100%);
+  border: 4px solid #fff3c4;
+  box-shadow: 0 0 0 6px rgba(245, 197, 66, 0.25), 0 0 60px rgba(245, 197, 66, 0.7);
+  overflow: hidden;
+}
+.cel__ico::after {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.85) 50%, transparent 60%);
+  transform: translateX(-120%);
+}
+.cel__nombre { margin: 22px 0 4px; font-size: 3rem; line-height: 1; color: var(--oro); text-shadow: 0 4px 0 rgba(0, 0, 0, 0.4); }
+.cel__desc { margin: 0; font-size: 1rem; color: var(--texto); }
+.cel__jugador { margin: 14px 0 0; font-family: 'Bebas Neue', Impact, sans-serif; font-size: 1.6rem; letter-spacing: 0.08em; }
+.cel__btn { margin-top: 22px; padding: 10px 22px; font-size: 1rem; }
+.cel__contador { margin: 10px 0 0; font-size: 0.78rem; color: var(--texto-suave); min-height: 1em; }
+
+/* Secuencia: destello → rayos → ícono con rebote → brillo → textos */
+.celebracion.anim .cel__flash { animation: flash 0.6s ease-out; }
+.celebracion.anim .cel__rayos { animation: aparecer 0.8s ease-out 0.1s forwards, girar 14s linear infinite; }
+.celebracion.anim .cel__kicker { animation: subir 0.5s ease-out both, shimmer 2.4s linear 0.6s infinite; }
+.celebracion.anim .cel__ico { animation: pop 0.9s cubic-bezier(0.2, 1.6, 0.4, 1) 0.15s both, latido 2s ease-in-out 1.2s infinite; }
+.celebracion.anim .cel__ico::after { animation: reflejo 1.1s ease-in-out 0.9s; }
+.celebracion.anim .cel__nombre { animation: subir 0.5s ease-out 0.55s both; }
+.celebracion.anim .cel__desc { animation: subir 0.5s ease-out 0.7s both; }
+.celebracion.anim .cel__jugador { animation: subir 0.5s ease-out 0.85s both; }
+.celebracion.anim .cel__btn { animation: subir 0.5s ease-out 1.1s both; }
+
+@keyframes flash { 0% { opacity: 0.85; } 100% { opacity: 0; } }
+@keyframes aparecer { to { opacity: 1; } }
+@keyframes girar { to { transform: rotate(360deg); } }
+@keyframes pop {
+  0% { transform: scale(0) rotate(-35deg); opacity: 0; }
+  60% { transform: scale(1.25) rotate(8deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); }
+}
+@keyframes latido {
+  50% { transform: scale(1.06); box-shadow: 0 0 0 10px rgba(245, 197, 66, 0.2), 0 0 90px rgba(245, 197, 66, 0.9); }
+}
+@keyframes reflejo { to { transform: translateX(120%); } }
+@keyframes subir { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .celebracion.anim * { animation: subir 0.4s ease-out both !important; }
+  .celebracion.anim .cel__rayos { opacity: 1; }
+}
+
 /* ---------- Mobile ---------- */
 @media (max-width: 640px) {
   .tabs { gap: 4px; padding: 8px; }
@@ -545,6 +681,8 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
   .perfil__stats { grid-template-columns: repeat(4, 1fr); gap: 6px; }
   .tile b { font-size: 1.25rem; }
   .tile span { font-size: 0.58rem; }
+  .cel__ico { width: 124px; height: 124px; font-size: 3.8rem; }
+  .cel__nombre { font-size: 2.5rem; }
   .podio__item .avatar--md { width: 42px; height: 42px; }
   .hero__stats { flex-wrap: nowrap; gap: 6px; }
   .stat { min-width: 0; flex: 1 1 0; padding: 6px 4px; }
