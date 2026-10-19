@@ -23,7 +23,8 @@
     "Chiqui",
     "Manuco",
     "Mona",
-    "Pipi"
+    "Pipi",
+    "Pitu"
   ],
   "fotos": {
     "Ferre": "fotos/ferre.jpg",
@@ -43,7 +44,8 @@
     "Manuel Romero": "fotos/manuel-romero.jpg",
     "Guido Ramirez": "fotos/guido-ramirez.jpg",
     "Manuco": "fotos/manuco.jpg",
-    "Chiqui": "fotos/chiqui.jpg"
+    "Chiqui": "fotos/chiqui.jpg",
+    "Pitu": "fotos/pitu.jpg"
   },
   "partidos": [],
   "suspendidas": [],
