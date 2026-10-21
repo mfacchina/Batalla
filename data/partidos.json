@@ -28,7 +28,7 @@
   ],
   "fotos": {
     "Ferre": "fotos/ferre.jpg",
-    "Facchina": "fotos/facchina.jpg",
+    "Facchina": "fotos/facchina.jpg?v=2",
     "Pal": "fotos/pal.jpg",
     "Mona": "fotos/mona.jpg",
     "Juan Pando": "fotos/juan-pando.jpg",
@@ -69,7 +69,7 @@
           "jugadores": [
             "Pal",
             "Manuco",
-            "Pitu",
+            "Guido Ramirez",
             "Manuel Romero",
             "Viegas"
           ]
