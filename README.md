@@ -56,6 +56,27 @@ Agregar un objeto al array `partidos` de `data/partidos.json`:
 - `nota`: opcional, texto libre.
 - Los nombres tienen que coincidir con los de `jugadores` (no distingue mayúsculas/minúsculas).
 
+- `sede`: opcional (`"KDT"`, `"Open Gallo"`), se muestra en la tarjeta del partido.
+
+## Próximo partido
+
+Con los equipos armados y sin resultado todavía, agregar un objeto a `proximos`:
+
+```json
+{
+  "fecha": "2026-10-21",
+  "hora": "19:00",
+  "sede": "KDT",
+  "equipos": [
+    { "nombre": "Equipo 1", "jugadores": ["Bau", "Facchina", "Pipi", "Mona", "Matias Balanho"] },
+    { "nombre": "Equipo 2", "jugadores": ["Pal", "Manuco", "Pitu", "Manuel Romero", "Viegas"] }
+  ]
+}
+```
+
+Se muestra arriba de la tabla y en Partidos, y no suma puntos. Cuando se juega, se borra de `proximos`
+y se pasa a `partidos` con `resultado` y `diferencia`.
+
 ## Fecha suspendida y baja tarde (W.O.)
 
 Agregar un objeto a `suspendidas`:

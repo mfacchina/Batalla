@@ -48,6 +48,35 @@
     "Pitu": "fotos/pitu.jpg"
   },
   "partidos": [],
+  "proximos": [
+    {
+      "fecha": "2026-10-21",
+      "hora": "19:00",
+      "sede": "KDT",
+      "equipos": [
+        {
+          "nombre": "Equipo 1",
+          "jugadores": [
+            "Bau",
+            "Facchina",
+            "Pipi",
+            "Mona",
+            "Matias Balanho"
+          ]
+        },
+        {
+          "nombre": "Equipo 2",
+          "jugadores": [
+            "Pal",
+            "Manuco",
+            "Pitu",
+            "Manuel Romero",
+            "Viegas"
+          ]
+        }
+      ]
+    }
+  ],
   "suspendidas": [],
   "historial": []
 }

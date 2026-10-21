@@ -2,6 +2,7 @@
 // Render de la página. La lógica del torneo está en calculos.js.
 
 const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+const DIAS = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 const MESES_LARGOS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
 const $ = (sel) => document.querySelector(sel);
@@ -173,7 +174,7 @@ function tarjetaPartido(p, numeros, oro, k) {
   return `
     <article class="partido${esOro ? ' partido--oro' : ''}">
       <header class="partido__head">
-        <span>📅 Fecha ${numeros.get(p.fecha)} · ${formatearFecha(p.fecha)}${esOro ? ' · <b class="oro-tag">⭐ Fecha de oro · puntos x2</b>' : ''}</span>
+        <span>📅 Fecha ${numeros.get(p.fecha)} · ${formatearFecha(p.fecha)}${p.sede ? ` · 📍 ${esc(p.sede)}` : ''}${esOro ? ' · <b class="oro-tag">⭐ Fecha de oro · puntos x2</b>' : ''}</span>
         ${p.nota ? `<span class="nota">${esc(p.nota)}</span>` : ''}
       </header>
       <div class="partido__body">
@@ -182,6 +183,47 @@ function tarjetaPartido(p, numeros, oro, k) {
         ${equipoHtml(b, 'B')}
       </div>
     </article>`;
+}
+
+// Partidos con equipos armados que todavía no tienen resultado
+const proximosDe = (data) => [...(data.proximos || [])].sort((a, b) => a.fecha.localeCompare(b.fecha));
+
+function tarjetaProximo(data, p, k) {
+  const dias = diasHasta(p.fecha);
+  const cuando = dias === 0 ? '¡Hoy!' : dias === 1 ? 'Mañana' : dias > 1 ? `Faltan ${dias} días` : 'Esperando resultado';
+  const n = numerarFechas([...data.partidos, ...proximosDe(data)]).get(p.fecha);
+  const cada = oroCadaDe(data);
+  const esOro = cada && n % cada === 0;
+  const [a, b] = p.equipos;
+  const equipoHtml = (e, letra) => `
+    <div class="equipo">
+      <h3>${esc(e.nombre || `Equipo ${letra}`)}</h3>
+      <ul>${e.jugadores.map((nom) => `<li class="${k && clave(nom) === k ? 'yo' : ''}" data-jugador="${esc(nom.trim())}">${avatar(data, nom)}${esc(nom.trim())}</li>`).join('')}</ul>
+    </div>`;
+  const detalle = [
+    `${DIAS[new Date(`${p.fecha}T12:00`).getDay()]} ${formatearFecha(p.fecha)}`,
+    p.hora && `${esc(p.hora)} hs`,
+    p.sede && `📍 ${esc(p.sede)}`,
+  ].filter(Boolean).join(' · ');
+  return `
+    <article class="partido partido--proximo${esOro ? ' partido--oro' : ''}">
+      <header class="partido__head">
+        <span>⏳ Próximo partido · Fecha ${n} · ${detalle}${esOro ? ' · <b class="oro-tag">⭐ Fecha de oro · puntos x2</b>' : ''}</span>
+        ${p.nota ? `<span class="nota">${esc(p.nota)}</span>` : ''}
+      </header>
+      <div class="partido__body">
+        ${equipoHtml(a, 'A')}
+        <div class="marcador"><span class="vs">VS</span><small>${cuando}</small></div>
+        ${equipoHtml(b, 'B')}
+      </div>
+    </article>`;
+}
+
+function renderProximos(data) {
+  const el = $('#proximo');
+  const proximos = proximosDe(data);
+  el.innerHTML = proximos.map((p) => tarjetaProximo(data, p)).join('');
+  el.hidden = !proximos.length;
 }
 
 function tarjetaSuspendida(s, k) {
@@ -220,12 +262,17 @@ function renderPartidos(data, jugador = null) {
     : [...(ev.s.anotados || []), ...(ev.s.bajas || [])].some((n) => clave(n) === k));
   // Más recientes primero
   const eventos = eventosDe(data).filter((ev) => !k || participa(ev)).reverse();
+  const proximos = proximosDe(data)
+    .filter((p) => !k || p.equipos.some((e) => e.jugadores.some((n) => clave(n) === k)))
+    .reverse()
+    .map((p) => tarjetaProximo(data, p, k))
+    .join('');
 
   if (!eventos.length) {
-    cont.innerHTML = `<p class="vacio board">${k ? `${esc(jugador)} todavía no jugó ningún partido.` : 'Todavía no hay partidos cargados.'}</p>`;
+    cont.innerHTML = proximos + `<p class="vacio board">${k ? `${esc(jugador)} todavía no jugó ningún partido.` : 'Todavía no hay partidos jugados.'}</p>`;
     return;
   }
-  cont.innerHTML = eventos.map((ev) => (ev.tipo === 'partido'
+  cont.innerHTML = proximos + eventos.map((ev) => (ev.tipo === 'partido'
     ? tarjetaPartido(ev.p, numeros, oro, k)
     : tarjetaSuspendida(ev.s, k))).join('');
 }
@@ -496,6 +543,7 @@ async function init() {
     return;
   }
   data.partidos = data.partidos || [];
+  data.proximos = data.proximos || [];
 
   if (data.torneo) {
     $('#titulo').textContent = data.torneo;
@@ -509,6 +557,7 @@ async function init() {
   renderResumen(data, tabla);
   renderTemporada(data, tabla);
   renderProximaOro(data);
+  renderProximos(data);
   renderTabla(data, tabla);
   renderPodio(data, tabla);
   renderPartidos(data);

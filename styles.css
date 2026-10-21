@@ -425,6 +425,16 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
 .ico { font-size: 0.78rem; white-space: nowrap; }
 .badge.wo { background: #7a1f1a; outline: 1px dashed var(--perdio); }
 
+/* ---------- Próximo partido ---------- */
+.proximo { margin-bottom: 16px; }
+.proximo[hidden] { display: none; }
+.partido--proximo { border: 2px solid var(--gano); box-shadow: 0 0 24px rgba(47, 191, 91, 0.2); }
+.partido--proximo.partido--oro { border-color: var(--oro); }
+.partido--proximo .equipo li { display: flex; align-items: center; cursor: pointer; }
+.partido--proximo .equipo:last-child li { flex-direction: row-reverse; }
+.partido--proximo .equipo:last-child .avatar { margin: 0 0 0 8px; }
+.marcador .vs { font-size: 2rem; color: var(--tiza); }
+
 /* ---------- Fecha suspendida ---------- */
 .partido--suspendida { border-style: dashed; opacity: 0.92; }
 .suspendida__body { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; padding: 16px; }
