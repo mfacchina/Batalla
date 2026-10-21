@@ -47,11 +47,9 @@
     "Chiqui": "fotos/chiqui.jpg",
     "Pitu": "fotos/pitu.jpg"
   },
-  "partidos": [],
-  "proximos": [
+  "partidos": [
     {
       "fecha": "2026-10-21",
-      "hora": "19:00",
       "sede": "KDT",
       "equipos": [
         {
@@ -74,9 +72,12 @@
             "Viegas"
           ]
         }
-      ]
+      ],
+      "resultado": "B",
+      "diferencia": 3
     }
   ],
+  "proximos": [],
   "suspendidas": [],
   "historial": []
 }
