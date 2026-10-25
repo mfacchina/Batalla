@@ -97,6 +97,7 @@ const badgeForma = ({ r, oro, wo }) => (wo
 function iconosJugador(j) {
   let html = '';
   if (j.racha >= 3) html += ` <span class="ico" title="${j.racha} partidos seguidos sin perder">🔥${j.racha}</span>`;
+  if (j.figuras) html += ` <span class="ico" title="Jugador del partido ${j.figuras} ${j.figuras === 1 ? 'vez' : 'veces'}">🎖️${j.figuras > 1 ? `×${j.figuras}` : ''}</span>`;
   if (j.wo) html += ` <span class="ico" title="${j.wo} ${j.wo === 1 ? 'amonestación' : 'amonestaciones'}">🟨${j.wo > 1 ? `×${j.wo}` : ''}</span>`;
   return html;
 }
@@ -168,13 +169,14 @@ function tarjetaPartido(p, numeros, oro, k) {
   const equipoHtml = (e, letra) => `
     <div class="equipo equipo--${estado(letra)}">
       <h3>${esc(e.nombre || `Equipo ${letra}`)}${estado(letra) === 'ganador' ? ' 🏆' : ''}</h3>
-      <ul>${e.jugadores.map((n) => `<li class="${k && clave(n) === k ? 'yo' : ''}">${esc(n.trim())}</li>`).join('')}</ul>
+      <ul>${e.jugadores.map((n) => `<li class="${k && clave(n) === k ? 'yo' : ''}">${esc(n.trim())}${p.figura && clave(n) === clave(p.figura) ? ' <span class="figura" title="Jugador del partido (+1 pt)">🎖️</span>' : ''}</li>`).join('')}</ul>
     </div>`;
   const esOro = oro.has(p.fecha);
   return `
     <article class="partido${esOro ? ' partido--oro' : ''}">
       <header class="partido__head">
         <span>📅 Fecha ${numeros.get(p.fecha)} · ${formatearFecha(p.fecha)}${p.sede ? ` · 📍 ${esc(p.sede)}` : ''}${esOro ? ' · <b class="oro-tag">⭐ Fecha de oro · puntos x2</b>' : ''}</span>
+        ${p.figura ? `<span class="figura-tag">🎖️ Jugador del partido: <b>${esc(p.figura)}</b> · +${PUNTO_FIGURA} pt</span>` : ''}
         ${p.nota ? `<span class="nota">${esc(p.nota)}</span>` : ''}
       </header>
       <div class="partido__body">
@@ -369,6 +371,7 @@ function abrirPerfil(estado, nombre) {
       <div>
         <h2>${esc(j.nombre)}</h2>
         <p>${j.pos ? `<b>${j.pos}º</b> en la tabla · Índice <b>${fmt(j.indice)}</b>` : 'Todavía no jugó'}</p>
+        ${j.figuras ? `<p class="perfil__mes">🎖️ Jugador del partido: ${j.figuras} ${j.figuras === 1 ? 'vez' : 'veces'}</p>` : ''}
         ${j.wo ? `<p class="perfil__tarjetas">🟨 ${j.wo} ${j.wo === 1 ? 'amonestación' : 'amonestaciones'} (baja tarde)</p>` : ''}
         ${delMes.length ? `<p class="perfil__mes">📅 Jugador del mes: ${delMes.map((m) => nombreMes(m.mes)).join(', ')}</p>` : ''}
       </div>

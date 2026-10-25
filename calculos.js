@@ -4,6 +4,8 @@
 const PUNTOS = { G: 3, E: 1, P: 0 };
 // Baja tarde sin reemplazo: cuenta como partido perdido 3-0
 const WO_DIFERENCIA = 3;
+// Jugador del partido: punto extra (no se duplica en fecha de oro)
+const PUNTO_FIGURA = 1;
 
 const clave = (nombre) => nombre.trim().toLocaleLowerCase('es-AR');
 
@@ -64,7 +66,7 @@ function eventosDe(data, { desde = '', hasta = '9999-12-31' } = {}) {
 
 const nuevoJugador = (nombre) => ({
   nombre: nombre.trim(),
-  pj: 0, pg: 0, pe: 0, pp: 0, pts: 0, dg: 0, wo: 0,
+  pj: 0, pg: 0, pe: 0, pp: 0, pts: 0, dg: 0, wo: 0, figuras: 0,
   forma: [], presentes: new Set(),
   racha: 0, mejorRacha: 0, rachaG: 0, mejorRachaG: 0,
   oroGanadas: 0, mayorGoleada: 0,
@@ -125,6 +127,11 @@ function calcularTabla(data, rango = {}) {
           for (const rival of equipos[1 - i]) sumarCruce(j.rivales, rival.nombre, r);
         }
       });
+      const figura = p.figura && equipos.flat().find((j) => clave(j.nombre) === clave(p.figura));
+      if (figura) {
+        figura.pts += PUNTO_FIGURA;
+        figura.figuras++;
+      }
     } else {
       // Fecha suspendida: los anotados cuentan como presentes; las bajas tarde pierden por W.O.
       const s = ev.s;

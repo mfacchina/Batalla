@@ -425,6 +425,9 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
 .ico { font-size: 0.78rem; white-space: nowrap; }
 .badge.wo { background: #7a1f1a; outline: 1px dashed var(--perdio); }
 
+.figura-tag { color: var(--oro); }
+.figura-tag b { color: var(--tiza); }
+
 /* ---------- Próximo partido ---------- */
 .proximo { margin-bottom: 16px; }
 .proximo[hidden] { display: none; }
