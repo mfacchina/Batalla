@@ -444,6 +444,15 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
 .cap__contra { font-size: 1.3rem; }
 .cap__regla { margin: 6px 0 0; font-size: 0.82rem; color: var(--texto-suave); }
 
+/* Flyer: entra con zoom, el VS late y cada tanto pasa un destello */
+.board.cap--flyer { display: block; position: relative; max-width: 760px; margin: 0 auto; padding: 0; overflow: hidden; animation: cap-flyer 0.8s ease-out both; }
+.cap--flyer img { display: block; width: 100%; height: auto; }
+.cap__brillo { position: absolute; left: 51.5%; top: 40%; width: 34%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(255, 120, 60, 0.55), rgba(255, 60, 30, 0) 65%); mix-blend-mode: screen; pointer-events: none; animation: cap-brillo 1.6s ease-in-out 0.8s infinite; }
+.cap__destello { position: absolute; inset: 0; background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.22) 50%, transparent 60%); transform: translateX(-100%); pointer-events: none; animation: cap-destello 5s ease-in-out 1.2s infinite; }
+@keyframes cap-flyer { from { opacity: 0; transform: scale(1.04); } to { opacity: 1; transform: none; } }
+@keyframes cap-brillo { 0%, 100% { opacity: 0.25; transform: translate(-50%, -50%) scale(0.9); } 50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); } }
+@keyframes cap-destello { 0%, 70% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
 /* Entrada: cada uno llega desde su lado; después quedan en guardia */
 .cap__peleador--a { animation: cap-entra-a 0.7s cubic-bezier(.2, .9, .3, 1.3) both; }
 .cap__peleador--b { animation: cap-entra-b 0.7s cubic-bezier(.2, .9, .3, 1.3) both; }
@@ -463,7 +472,8 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
 @keyframes cap-late { 0%, 100% { transform: scale(1) rotate(0); } 50% { transform: scale(1.08) rotate(4deg); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .cap__ring * { animation: none !important; }
+  .cap__ring *, .cap--flyer, .cap--flyer span { animation: none !important; }
+  .cap__brillo { opacity: 0.6; }
 }
 
 /* ---------- Próximo partido ---------- */

@@ -94,6 +94,9 @@ animación arriba de la tabla. `jugador` tiene que estar en `jugadores` (de ahí
 - `cara`: PNG transparente de la cabeza estilo caricatura. Sin `cara` se usa la foto del jugador en un círculo.
 - `ropa`: `"buzo"` (buzo, short y medias) o `"remera"` (remera y pantalón). `caraY` baja (o sube) la cabeza en px.
 
+Con `"flyerCapitanes": "fotos/capitanes/flyer.webp"` se muestra esa imagen (1200×951) en lugar del dibujo,
+con el VS latiendo y un destello; al tocarla se abre en grande.
+
 Sin `capitanes` (o con otra cantidad que no sea 2) no se muestra nada.
 
 ## Fecha suspendida y baja tarde (W.O.)

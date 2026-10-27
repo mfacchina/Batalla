@@ -272,6 +272,18 @@ function renderCapitanes(data) {
   if (caps.length !== 2) return;
   const [a, b] = caps;
   const nombre = (c) => esc(c.nombre || c.jugador);
+  // Con flyer se muestra la imagen; si no, el dibujo animado
+  if (data.flyerCapitanes) {
+    const flyer = esc(data.flyerCapitanes);
+    el.innerHTML = `
+      <a class="board cap cap--flyer" href="${flyer}" target="_blank" rel="noopener">
+        <img src="${flyer}" width="1200" height="951" alt="Capitanes: ${nombre(a)} contra ${nombre(b)}. Eligen de a un jugador por vez, alternando, hasta completar los dos equipos de 5.">
+        <span class="cap__brillo" aria-hidden="true"></span>
+        <span class="cap__destello" aria-hidden="true"></span>
+      </a>`;
+    el.hidden = false;
+    return;
+  }
   const ropaA = { ropa: a.ropa || 'buzo', remera: a.remera || '#2f5fd0', short: a.short || '#2a52c4' };
   const ropaB = { ropa: b.ropa || 'remera', remera: b.remera || '#22252b', short: b.short || '#33373f' };
   // Rayitas de impacto alrededor de la explosión

@@ -49,6 +49,7 @@
     "Pitu": "fotos/pitu.jpg",
     "Agustin Aguero": "fotos/agustin-aguero.jpg"
   },
+  "flyerCapitanes": "fotos/capitanes/flyer.webp",
   "capitanes": [
     {
       "jugador": "Bau",
