@@ -428,6 +428,44 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
 .figura-tag { color: var(--oro); }
 .figura-tag b { color: var(--tiza); }
 
+/* ---------- Capitanes ---------- */
+.capitanes { margin-bottom: 16px; }
+.capitanes[hidden] { display: none; }
+.cap { text-align: center; overflow: hidden; }
+.cap__kicker { margin: 0; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--oro); }
+.cap__ring { display: block; width: 100%; max-width: 560px; margin: 4px auto 0; overflow: visible; }
+.cap__peleador, .cap__cuerpo, .cap__cabeza, .cap__guante, .cap__explosion { transform-box: fill-box; }
+.cap__sombra { fill: rgba(0, 0, 0, 0.35); }
+.cap__vs { font-family: 'Bebas Neue', Impact, sans-serif; font-size: 58px; fill: #fff; stroke: #7f0000; stroke-width: 3; paint-order: stroke; letter-spacing: 2px; }
+.cap__ini { font-family: 'Bebas Neue', Impact, sans-serif; font-size: 40px; fill: var(--tiza); }
+.cap__nombres { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
+.cap__nombre { font-family: 'Bebas Neue', Impact, sans-serif; font-size: 1.7rem; letter-spacing: 0.04em; color: var(--tiza); background: none; border: 0; padding: 0; cursor: pointer; }
+.cap__nombre:hover { color: var(--oro); }
+.cap__contra { font-size: 1.3rem; }
+.cap__regla { margin: 6px 0 0; font-size: 0.82rem; color: var(--texto-suave); }
+
+/* Entrada: cada uno llega desde su lado; después quedan en guardia */
+.cap__peleador--a { animation: cap-entra-a 0.7s cubic-bezier(.2, .9, .3, 1.3) both; }
+.cap__peleador--b { animation: cap-entra-b 0.7s cubic-bezier(.2, .9, .3, 1.3) both; }
+.cap__peleador--a .cap__cuerpo, .cap__peleador--a .cap__cabeza { animation: cap-guardia 0.9s ease-in-out 0.7s infinite; }
+.cap__peleador--b .cap__cuerpo, .cap__peleador--b .cap__cabeza { animation: cap-guardia 0.9s ease-in-out 1.15s infinite; }
+.cap__guante--frente { animation: cap-jab 1.8s ease-in-out 0.9s infinite; }
+.cap__guante--atras { animation: cap-jab 1.8s ease-in-out 1.8s infinite; }
+.cap__peleador--b .cap__guante--frente { animation-delay: 1.5s; }
+.cap__peleador--b .cap__guante--atras { animation-delay: 2.4s; }
+.cap__explosion { transform-origin: center; animation: cap-boom 0.5s ease-out 0.55s both, cap-late 1.8s ease-in-out 1.05s infinite; }
+
+@keyframes cap-entra-a { from { transform: translateX(-180px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes cap-entra-b { from { transform: translateX(180px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes cap-guardia { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+@keyframes cap-jab { 0%, 70%, 100% { transform: translateX(0); } 80% { transform: translateX(22px); } }
+@keyframes cap-boom { from { transform: scale(0) rotate(-40deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
+@keyframes cap-late { 0%, 100% { transform: scale(1) rotate(0); } 50% { transform: scale(1.08) rotate(4deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cap__ring * { animation: none !important; }
+}
+
 /* ---------- Próximo partido ---------- */
 .proximo { margin-bottom: 16px; }
 .proximo[hidden] { display: none; }

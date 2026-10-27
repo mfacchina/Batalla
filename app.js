@@ -187,6 +187,76 @@ function tarjetaPartido(p, numeros, oro, k) {
     </article>`;
 }
 
+// ---------- Capitanes ----------
+
+// Un peleador mirando a la derecha, con el centro de los pies en x = 0
+function cuerpoPeleador(remera, short) {
+  return `
+    <ellipse class="cap__sombra" cx="0" cy="286" rx="62" ry="8"/>
+    <g class="cap__cuerpo">
+      <rect x="-30" y="208" width="22" height="64" rx="8" fill="#e9d2b8"/>
+      <rect x="8" y="208" width="22" height="64" rx="8" fill="#e9d2b8"/>
+      <rect x="-36" y="262" width="34" height="16" rx="7" fill="#f4f7f2"/>
+      <rect x="6" y="262" width="38" height="16" rx="7" fill="#f4f7f2"/>
+      <rect x="-40" y="186" width="80" height="44" rx="10" fill="${short}"/>
+      <rect x="-46" y="112" width="92" height="96" rx="26" fill="${remera}"/>
+      <path class="cap__brazo cap__brazo--atras" d="M-10 132 Q 30 160 48 118" fill="none" stroke="${remera}" stroke-width="20" stroke-linecap="round"/>
+      <g class="cap__guante cap__guante--atras"><circle cx="50" cy="112" r="18" fill="#c62828"/><circle cx="44" cy="106" r="6" fill="#ff8a80" opacity="0.7"/></g>
+      <path class="cap__brazo" d="M28 128 Q 62 150 74 100" fill="none" stroke="${remera}" stroke-width="20" stroke-linecap="round"/>
+      <g class="cap__guante cap__guante--frente"><circle cx="78" cy="94" r="20" fill="#e53935"/><circle cx="71" cy="87" r="7" fill="#ff8a80" opacity="0.7"/></g>
+    </g>`;
+}
+
+function cabezaPeleador(data, nombre, id) {
+  const foto = fotoDe(data, nombre);
+  return `
+    <g class="cap__cabeza">
+      <clipPath id="${id}"><circle cx="0" cy="66" r="50"/></clipPath>
+      <circle cx="0" cy="66" r="54" fill="#f5c542"/>
+      ${foto
+        ? `<image href="${esc(foto)}" x="-50" y="16" width="100" height="100" clip-path="url(#${id})" preserveAspectRatio="xMidYMid slice"/>`
+        : `<circle cx="0" cy="66" r="50" fill="#1d3b2a"/><text x="0" y="80" text-anchor="middle" class="cap__ini">${esc(iniciales(nombre))}</text>`}
+    </g>`;
+}
+
+function renderCapitanes(data) {
+  const el = $('#capitanes');
+  const caps = data.capitanes || [];
+  if (caps.length !== 2) return;
+  const [a, b] = caps;
+  const nombre = (c) => esc(c.nombre || c.jugador);
+  el.innerHTML = `
+    <div class="board cap">
+      <p class="cap__kicker">🥊 Capitanes · arman los equipos</p>
+      <svg class="cap__ring" viewBox="0 0 600 300" role="img" aria-label="${nombre(a)} contra ${nombre(b)}">
+        <g class="cap__explosion">
+          <polygon points="300,52 318,104 368,74 346,124 404,128 354,154 396,196 340,184 344,242 306,198 282,250 270,194 220,222 244,170 196,150 248,132 216,86 268,108" fill="#d32f2f"/>
+          <polygon points="300,86 312,120 344,104 330,134 368,140 334,156 358,184 324,174 322,208 300,180 284,210 278,176 246,188 264,158 232,146 266,134 248,104 280,118" fill="#ff5252"/>
+          <text x="300" y="166" text-anchor="middle" class="cap__vs">VS</text>
+        </g>
+        <g class="cap__peleador cap__peleador--a">
+          <g transform="translate(170 0)">
+            ${cuerpoPeleador(a.remera || '#2f5fd0', a.short || '#2448a8')}
+            ${cabezaPeleador(data, a.jugador, 'cap-cara-a')}
+          </g>
+        </g>
+        <g class="cap__peleador cap__peleador--b">
+          <g transform="translate(430 0)">
+            <g transform="scale(-1 1)">${cuerpoPeleador(b.remera || '#22252b', b.short || '#3a3f48')}</g>
+            ${cabezaPeleador(data, b.jugador, 'cap-cara-b')}
+          </g>
+        </g>
+      </svg>
+      <div class="cap__nombres">
+        <button class="cap__nombre" data-jugador="${esc(a.jugador)}">${nombre(a)}</button>
+        <span class="cap__contra">🆚</span>
+        <button class="cap__nombre" data-jugador="${esc(b.jugador)}">${nombre(b)}</button>
+      </div>
+      <p class="cap__regla">Eligen de a un jugador por vez, alternando, hasta completar los dos equipos de 5.</p>
+    </div>`;
+  el.hidden = false;
+}
+
 // Partidos con equipos armados que todavía no tienen resultado
 const proximosDe = (data) => [...(data.proximos || [])].sort((a, b) => a.fecha.localeCompare(b.fecha));
 
@@ -560,6 +630,7 @@ async function init() {
   renderResumen(data, tabla);
   renderTemporada(data, tabla);
   renderProximaOro(data);
+  renderCapitanes(data);
   renderProximos(data);
   renderTabla(data, tabla);
   renderPodio(data, tabla);

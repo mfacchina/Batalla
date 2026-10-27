@@ -49,6 +49,18 @@
     "Pitu": "fotos/pitu.jpg",
     "Agustin Aguero": "fotos/agustin-aguero.jpg"
   },
+  "capitanes": [
+    {
+      "jugador": "Bau",
+      "nombre": "Bautista Mato",
+      "remera": "#2f5fd0"
+    },
+    {
+      "jugador": "Manuco",
+      "nombre": "Manuel Mato",
+      "remera": "#22252b"
+    }
+  ],
   "partidos": [
     {
       "fecha": "2026-10-21",

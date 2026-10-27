@@ -78,6 +78,21 @@ Con los equipos armados y sin resultado todavía, agregar un objeto a `proximos`
 Se muestra arriba de la tabla y en Partidos, y no suma puntos. Cuando se juega, se borra de `proximos`
 y se pasa a `partidos` con `resultado` y `diferencia`.
 
+## Capitanes
+
+Los que arman los equipos (eligen de a un jugador, alternando). Se muestran enfrentados con una
+animación arriba de la tabla. `jugador` tiene que estar en `jugadores` (de ahí sale la foto);
+`nombre` es el que se muestra y `remera`/`short` son colores opcionales:
+
+```json
+"capitanes": [
+  { "jugador": "Bau", "nombre": "Bautista Mato", "remera": "#2f5fd0" },
+  { "jugador": "Manuco", "nombre": "Manuel Mato", "remera": "#22252b" }
+]
+```
+
+Sin `capitanes` (o con otra cantidad que no sea 2) no se muestra nada.
+
 ## Fecha suspendida y baja tarde (W.O.)
 
 Agregar un objeto a `suspendidas`:

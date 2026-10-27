@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2026-10-25.1">
+  <link rel="stylesheet" href="styles.css?v=2026-10-27.1">
 </head>
 <body>
   <header class="hero">
@@ -32,6 +32,7 @@
 
   <main>
     <section id="ranking" class="panel is-active" role="tabpanel">
+      <div id="capitanes" class="capitanes" hidden></div>
       <div id="proximo" class="partidos proximo" hidden></div>
       <div class="board">
         <div class="board__head">
@@ -113,7 +114,8 @@
         <ol>
           <li>Durante la semana se hace la votación en el grupo.</li>
           <li>Los primeros 10 que se anotan juegan.</li>
-          <li>Se arman dos equipos de 5 y se juega el partido.</li>
+          <li>Los dos <strong>capitanes</strong> arman los equipos: eligen de a un jugador por vez, alternando, hasta completar los dos equipos de 5.</li>
+          <li>Se juega el partido.</li>
           <li>Los que no juegan esa semana no suman puntos y les baja la asistencia.</li>
         </ol>
         <h3>🚫 Fechas suspendidas</h3>
@@ -168,7 +170,7 @@
     <span id="actualizado"></span>
   </footer>
 
-  <script src="calculos.js?v=2026-10-25.1"></script>
-  <script src="app.js?v=2026-10-25.1"></script>
+  <script src="calculos.js?v=2026-10-27.1"></script>
+  <script src="app.js?v=2026-10-27.1"></script>
 </body>
 </html>
