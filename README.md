@@ -86,10 +86,13 @@ animación arriba de la tabla. `jugador` tiene que estar en `jugadores` (de ahí
 
 ```json
 "capitanes": [
-  { "jugador": "Bau", "nombre": "Bautista Mato", "remera": "#2f5fd0" },
-  { "jugador": "Manuco", "nombre": "Manuel Mato", "remera": "#22252b" }
+  { "jugador": "Bau", "nombre": "Bautista Mato", "cara": "fotos/capitanes/bau.png", "ropa": "buzo", "remera": "#2f5fd0" },
+  { "jugador": "Manuco", "nombre": "Manuel Mato", "cara": "fotos/capitanes/manuco.png", "ropa": "remera", "remera": "#22252b" }
 ]
 ```
+
+- `cara`: PNG transparente de la cabeza estilo caricatura. Sin `cara` se usa la foto del jugador en un círculo.
+- `ropa`: `"buzo"` (buzo, short y medias) o `"remera"` (remera y pantalón). `caraY` baja (o sube) la cabeza en px.
 
 Sin `capitanes` (o con otra cantidad que no sea 2) no se muestra nada.
 

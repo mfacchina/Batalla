@@ -189,33 +189,80 @@ function tarjetaPartido(p, numeros, oro, k) {
 
 // ---------- Capitanes ----------
 
-// Un peleador mirando a la derecha, con el centro de los pies en x = 0
-function cuerpoPeleador(remera, short) {
+const TINTA = '#1b1f2e';
+const PIEL = '#f0c39d';
+
+// Brazo en guardia: contorno + manga (o piel si es de manga corta)
+const brazoPeleador = (d, color) => `
+    <path d="${d}" fill="none" stroke="${TINTA}" stroke-width="30" stroke-linecap="round"/>
+    <path d="${d}" fill="none" stroke="${color}" stroke-width="22" stroke-linecap="round"/>`;
+
+function punoPeleador([px, py]) {
   return `
-    <ellipse class="cap__sombra" cx="0" cy="286" rx="62" ry="8"/>
-    <g class="cap__cuerpo">
-      <rect x="-30" y="208" width="22" height="64" rx="8" fill="#e9d2b8"/>
-      <rect x="8" y="208" width="22" height="64" rx="8" fill="#e9d2b8"/>
-      <rect x="-36" y="262" width="34" height="16" rx="7" fill="#f4f7f2"/>
-      <rect x="6" y="262" width="38" height="16" rx="7" fill="#f4f7f2"/>
-      <rect x="-40" y="186" width="80" height="44" rx="10" fill="${short}"/>
-      <rect x="-46" y="112" width="92" height="96" rx="26" fill="${remera}"/>
-      <path class="cap__brazo cap__brazo--atras" d="M-10 132 Q 30 160 48 118" fill="none" stroke="${remera}" stroke-width="20" stroke-linecap="round"/>
-      <g class="cap__guante cap__guante--atras"><circle cx="50" cy="112" r="18" fill="#c62828"/><circle cx="44" cy="106" r="6" fill="#ff8a80" opacity="0.7"/></g>
-      <path class="cap__brazo" d="M28 128 Q 62 150 74 100" fill="none" stroke="${remera}" stroke-width="20" stroke-linecap="round"/>
-      <g class="cap__guante cap__guante--frente"><circle cx="78" cy="94" r="20" fill="#e53935"/><circle cx="71" cy="87" r="7" fill="#ff8a80" opacity="0.7"/></g>
+    <g class="cap__puno">
+      <circle cx="${px}" cy="${py}" r="17" fill="${PIEL}" stroke="${TINTA}" stroke-width="4"/>
+      <path d="M${px + 2} ${py - 10} q 8 4 6 12 M${px + 4} ${py - 1} q 6 3 3 9" fill="none" stroke="${TINTA}" stroke-width="2.5" stroke-linecap="round"/>
     </g>`;
 }
 
-function cabezaPeleador(data, nombre, id) {
-  const foto = fotoDe(data, nombre);
+// Un peleador chibi mirando a la derecha, con el centro de los pies en x = 0.
+// ropa "buzo": buzo, short y medias con rayas; "remera": remera y pantalón largo.
+function cuerpoPeleador({ ropa = 'buzo', remera, short }) {
+  const linea = `stroke="${TINTA}" stroke-width="4" stroke-linejoin="round"`;
+  const zapatilla = (x, ancho) => `
+    <path d="M${x} 326 q 0 -12 14 -12 h ${ancho - 26} q 14 2 14 14 v 6 h -${ancho + 2} z" fill="#f4f7f2" ${linea}/>
+    <path d="M${x + 2} 330 h ${ancho - 2}" stroke="#9aa3b5" stroke-width="4"/>`;
+  const piernas = ropa === 'buzo'
+    ? `
+      <rect x="-27" y="262" width="20" height="40" fill="${PIEL}" ${linea}/>
+      <rect x="7" y="262" width="20" height="40" fill="${PIEL}" ${linea}/>
+      <rect x="-29" y="290" width="24" height="28" rx="4" fill="#f4f7f2" ${linea}/>
+      <rect x="5" y="290" width="24" height="28" rx="4" fill="#f4f7f2" ${linea}/>
+      <path d="M-27 297 h20 M-27 304 h20 M7 297 h20 M7 304 h20" stroke="${short}" stroke-width="3"/>
+      ${zapatilla(-40, 40)}${zapatilla(2, 46)}
+      <path d="M-44 232 H44 L47 276 H5 L0 260 L-5 276 H-47 Z" fill="${short}" ${linea}/>
+      <path d="M-38 268 H-8 M8 268 H40" stroke="#fff" stroke-width="3" opacity="0.6"/>`
+    : `
+      <path d="M-36 236 H-4 L-8 318 H-32 Z" fill="${short}" ${linea}/>
+      <path d="M2 236 H32 L48 314 H22 Z" fill="${short}" ${linea}/>
+      <path d="M-30 300 H-10 M24 296 H44" stroke="#fff" stroke-width="3" opacity="0.35"/>
+      ${zapatilla(-44, 42)}${zapatilla(14, 46)}`;
+  const torso = `
+    <path d="M-46 154 Q -52 200 -44 246 H44 Q 52 200 46 154 Q 0 134 -46 154 Z" fill="${remera}" ${linea}/>
+    ${ropa === 'buzo'
+      ? `<path d="M-44 234 H44" stroke="${TINTA}" stroke-width="3" opacity="0.5"/>
+         <path d="M-30 236 v8 M-15 236 v8 M0 236 v8 M15 236 v8 M30 236 v8" stroke="${TINTA}" stroke-width="2" opacity="0.35"/>
+         <path d="M-16 146 Q 0 158 16 146" fill="none" stroke="${TINTA}" stroke-width="3" opacity="0.6"/>`
+      : `<path d="M-14 146 Q 0 166 14 146" fill="${PIEL}" ${linea}/>
+         <path d="M-30 196 q 10 6 4 20" fill="none" stroke="#fff" stroke-width="2" opacity="0.2"/>`}`;
+  const conManga = ropa === 'buzo';
+  return `
+    <ellipse class="cap__sombra" cx="0" cy="342" rx="70" ry="9"/>
+    <g class="cap__cuerpo">
+      ${piernas}
+      ${brazoPeleador('M-30 182 Q -26 230 14 218', conManga ? remera : PIEL)}
+      ${torso}
+      ${punoPeleador([18, 214])}
+      ${conManga ? '' : `<circle cx="-30" cy="172" r="16" fill="${remera}" ${linea}/><circle cx="30" cy="170" r="16" fill="${remera}" ${linea}/>`}
+      ${brazoPeleador('M30 172 Q 70 226 76 160', conManga ? remera : PIEL)}
+      ${punoPeleador([78, 152])}
+      ${conManga ? `<rect x="54" y="164" width="14" height="9" rx="2" fill="#2b2f3a" transform="rotate(-60 61 168)"/>` : ''}
+    </g>`;
+}
+
+function cabezaPeleador(data, c, id) {
+  // Con caricatura: cabeza grande recortada. Si no, la foto en un círculo.
+  if (c.cara) {
+    return `<g class="cap__cabeza"><image href="${esc(c.cara)}" x="-92" y="${-22 + (Number(c.caraY) || 0)}" width="184" height="184"/></g>`;
+  }
+  const foto = fotoDe(data, c.jugador);
   return `
     <g class="cap__cabeza">
-      <clipPath id="${id}"><circle cx="0" cy="66" r="50"/></clipPath>
-      <circle cx="0" cy="66" r="54" fill="#f5c542"/>
+      <clipPath id="${id}"><circle cx="0" cy="92" r="60"/></clipPath>
+      <circle cx="0" cy="92" r="65" fill="${TINTA}"/>
       ${foto
-        ? `<image href="${esc(foto)}" x="-50" y="16" width="100" height="100" clip-path="url(#${id})" preserveAspectRatio="xMidYMid slice"/>`
-        : `<circle cx="0" cy="66" r="50" fill="#1d3b2a"/><text x="0" y="80" text-anchor="middle" class="cap__ini">${esc(iniciales(nombre))}</text>`}
+        ? `<image href="${esc(foto)}" x="-60" y="32" width="120" height="120" clip-path="url(#${id})" preserveAspectRatio="xMidYMid slice"/>`
+        : `<circle cx="0" cy="92" r="60" fill="#1d3b2a"/><text x="0" y="106" text-anchor="middle" class="cap__ini">${esc(iniciales(c.jugador))}</text>`}
     </g>`;
 }
 
@@ -225,25 +272,39 @@ function renderCapitanes(data) {
   if (caps.length !== 2) return;
   const [a, b] = caps;
   const nombre = (c) => esc(c.nombre || c.jugador);
+  const ropaA = { ropa: a.ropa || 'buzo', remera: a.remera || '#2f5fd0', short: a.short || '#2a52c4' };
+  const ropaB = { ropa: b.ropa || 'remera', remera: b.remera || '#22252b', short: b.short || '#33373f' };
+  // Rayitas de impacto alrededor de la explosión
+  const rayos = [[-120, -70], [-135, 0], [-118, 66], [120, -70], [135, 0], [118, 66], [0, -112]]
+    .map(([dx, dy]) => {
+      const l = Math.hypot(dx, dy);
+      const [ux, uy] = [dx / l, dy / l];
+      return `<line x1="${320 + ux * (l - 22)}" y1="${178 + uy * (l - 22)}" x2="${320 + ux * l}" y2="${178 + uy * l}"/>`;
+    }).join('');
   el.innerHTML = `
     <div class="board cap">
       <p class="cap__kicker">🥊 Capitanes · arman los equipos</p>
-      <svg class="cap__ring" viewBox="0 0 600 300" role="img" aria-label="${nombre(a)} contra ${nombre(b)}">
+      <svg class="cap__ring" viewBox="0 -30 640 390" role="img" aria-label="${nombre(a)} contra ${nombre(b)}">
+        <defs>
+          <radialGradient id="cap-luz"><stop offset="0" stop-color="#f5c542" stop-opacity="0.28"/><stop offset="1" stop-color="#f5c542" stop-opacity="0"/></radialGradient>
+        </defs>
+        <ellipse cx="320" cy="190" rx="300" ry="170" fill="url(#cap-luz)"/>
         <g class="cap__explosion">
-          <polygon points="300,52 318,104 368,74 346,124 404,128 354,154 396,196 340,184 344,242 306,198 282,250 270,194 220,222 244,170 196,150 248,132 216,86 268,108" fill="#d32f2f"/>
-          <polygon points="300,86 312,120 344,104 330,134 368,140 334,156 358,184 324,174 322,208 300,180 284,210 278,176 246,188 264,158 232,146 266,134 248,104 280,118" fill="#ff5252"/>
-          <text x="300" y="166" text-anchor="middle" class="cap__vs">VS</text>
+          <polygon points="320,58 342,118 398,82 374,140 440,144 384,174 432,222 368,208 372,272 330,222 302,282 290,218 232,250 258,192 202,170 262,150 226,98 288,124" fill="#d32f2f" stroke="${TINTA}" stroke-width="5" stroke-linejoin="round"/>
+          <polygon points="320,96 334,136 370,116 354,152 396,158 360,176 388,206 348,196 346,234 322,202 304,238 298,198 262,212 282,178 246,164 284,152 262,118 298,134" fill="#ff5a4e"/>
+          <text x="320" y="196" text-anchor="middle" class="cap__vs">VS</text>
         </g>
+        <g class="cap__rayos" stroke="#f5c542" stroke-width="5" stroke-linecap="round">${rayos}</g>
         <g class="cap__peleador cap__peleador--a">
-          <g transform="translate(170 0)">
-            ${cuerpoPeleador(a.remera || '#2f5fd0', a.short || '#2448a8')}
-            ${cabezaPeleador(data, a.jugador, 'cap-cara-a')}
+          <g transform="translate(180 0)">
+            ${cuerpoPeleador(ropaA)}
+            ${cabezaPeleador(data, a, 'cap-cara-a')}
           </g>
         </g>
         <g class="cap__peleador cap__peleador--b">
-          <g transform="translate(430 0)">
-            <g transform="scale(-1 1)">${cuerpoPeleador(b.remera || '#22252b', b.short || '#3a3f48')}</g>
-            ${cabezaPeleador(data, b.jugador, 'cap-cara-b')}
+          <g transform="translate(460 0)">
+            <g transform="scale(-1 1)">${cuerpoPeleador(ropaB)}</g>
+            ${cabezaPeleador(data, b, 'cap-cara-b')}
           </g>
         </g>
       </svg>

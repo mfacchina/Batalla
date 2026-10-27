@@ -53,12 +53,17 @@
     {
       "jugador": "Bau",
       "nombre": "Bautista Mato",
-      "remera": "#2f5fd0"
+      "remera": "#2f5fd0",
+      "cara": "fotos/capitanes/bau.png",
+      "ropa": "buzo",
+      "caraY": 20
     },
     {
       "jugador": "Manuco",
       "nombre": "Manuel Mato",
-      "remera": "#22252b"
+      "remera": "#22252b",
+      "cara": "fotos/capitanes/manuco.png",
+      "ropa": "remera"
     }
   ],
   "partidos": [
