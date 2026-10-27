@@ -98,7 +98,14 @@
       "figura": "Viegas"
     }
   ],
-  "proximos": [],
+  "proximos": [
+    {
+      "fecha": "2026-10-28",
+      "hora": "19:00",
+      "sede": "KDT",
+      "nota": "Los capitanes arman los equipos"
+    }
+  ],
   "suspendidas": [],
   "historial": []
 }

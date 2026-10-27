@@ -75,7 +75,8 @@ Con los equipos armados y sin resultado todavía, agregar un objeto a `proximos`
 }
 ```
 
-Se muestra arriba de la tabla y en Partidos, y no suma puntos. Cuando se juega, se borra de `proximos`
+Si todavía no hay equipos, se puede omitir `equipos`: se muestra cada capitán encabezando el suyo
+con "equipo a definir". Se muestra arriba de la tabla y en Partidos, y no suma puntos. Cuando se juega, se borra de `proximos`
 y se pasa a `partidos` con `resultado` y `diferencia`.
 
 ## Capitanes

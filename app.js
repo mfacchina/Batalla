@@ -333,17 +333,26 @@ function renderCapitanes(data) {
 // Partidos con equipos armados que todavía no tienen resultado
 const proximosDe = (data) => [...(data.proximos || [])].sort((a, b) => a.fecha.localeCompare(b.fecha));
 
+// Sin equipos cargados todavía: cada capitán encabeza el suyo
+function equiposProximo(data, p) {
+  if ((p.equipos || []).length === 2) return p.equipos;
+  const caps = data.capitanes || [];
+  if (caps.length !== 2) return [{ jugadores: [] }, { jugadores: [] }];
+  return caps.map((c) => ({ nombre: `Equipo ${(c.nombre || c.jugador).split(' ')[0]}`, jugadores: [c.jugador], aDefinir: true }));
+}
+
 function tarjetaProximo(data, p, k) {
   const dias = diasHasta(p.fecha);
   const cuando = dias === 0 ? '¡Hoy!' : dias === 1 ? 'Mañana' : dias > 1 ? `Faltan ${dias} días` : 'Esperando resultado';
   const n = numerarFechas([...data.partidos, ...proximosDe(data)]).get(p.fecha);
   const cada = oroCadaDe(data);
   const esOro = cada && n % cada === 0;
-  const [a, b] = p.equipos;
+  const [a, b] = equiposProximo(data, p);
   const equipoHtml = (e, letra) => `
     <div class="equipo">
       <h3>${esc(e.nombre || `Equipo ${letra}`)}</h3>
-      <ul>${e.jugadores.map((nom) => `<li class="${k && clave(nom) === k ? 'yo' : ''}" data-jugador="${esc(nom.trim())}">${avatar(data, nom)}${esc(nom.trim())}</li>`).join('')}</ul>
+      <ul>${e.jugadores.map((nom) => `<li class="${k && clave(nom) === k ? 'yo' : ''}" data-jugador="${esc(nom.trim())}">${avatar(data, nom)}${esc(nom.trim())}${e.aDefinir ? ' <small class="cap-tag">capitán</small>' : ''}</li>`).join('')}</ul>
+      ${e.aDefinir ? '<p class="a-definir">Elige de a uno… equipo a definir</p>' : ''}
     </div>`;
   const detalle = [
     `${DIAS[new Date(`${p.fecha}T12:00`).getDay()]} ${formatearFecha(p.fecha)}`,
@@ -408,7 +417,7 @@ function renderPartidos(data, jugador = null) {
   // Más recientes primero
   const eventos = eventosDe(data).filter((ev) => !k || participa(ev)).reverse();
   const proximos = proximosDe(data)
-    .filter((p) => !k || p.equipos.some((e) => e.jugadores.some((n) => clave(n) === k)))
+    .filter((p) => !k || equiposProximo(data, p).some((e) => e.jugadores.some((n) => clave(n) === k)))
     .reverse()
     .map((p) => tarjetaProximo(data, p, k))
     .join('');

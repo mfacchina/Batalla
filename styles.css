@@ -477,6 +477,8 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
 }
 
 /* ---------- Próximo partido ---------- */
+.cap-tag { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--oro); margin: 0 6px; }
+.a-definir { margin: 8px 0 0; font-size: 0.8rem; font-style: italic; color: var(--texto-suave); }
 .proximo { margin-bottom: 16px; }
 .proximo[hidden] { display: none; }
 .partido--proximo { border: 2px solid var(--gano); box-shadow: 0 0 24px rgba(47, 191, 91, 0.2); }
