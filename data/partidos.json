@@ -96,16 +96,37 @@
       "resultado": "B",
       "diferencia": 3,
       "figura": "Viegas"
-    }
-  ],
-  "proximos": [
+    },
     {
       "fecha": "2026-10-28",
-      "hora": "19:00",
       "sede": "KDT",
-      "nota": "Los capitanes arman los equipos"
+      "equipos": [
+        {
+          "nombre": "Team Manuco",
+          "jugadores": [
+            "Manuco",
+            "Bona",
+            "Mingro",
+            "Viegas",
+            "Mona"
+          ]
+        },
+        {
+          "nombre": "Team Facchi",
+          "jugadores": [
+            "Facchina",
+            "Bau",
+            "Matias Balanho",
+            "Juanse",
+            "Agustin Aguero"
+          ]
+        }
+      ],
+      "resultado": "B",
+      "diferencia": 10
     }
   ],
+  "proximos": [],
   "suspendidas": [],
   "historial": []
 }
