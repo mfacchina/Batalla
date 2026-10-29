@@ -79,6 +79,15 @@ Si todavía no hay equipos, se puede omitir `equipos`: se muestra cada capitán 
 con "equipo a definir". Se muestra arriba de la tabla y en Partidos, y no suma puntos. Cuando se juega, se borra de `proximos`
 y se pasa a `partidos` con `resultado` y `diferencia`.
 
+## Flyer
+
+Una imagen destacada arriba de la tabla (por ejemplo, el resumen de la última fecha). Tiene prioridad
+sobre la animación de los capitanes; al tocarla se abre en grande. Para sacarla, borrar `flyer`.
+
+```json
+"flyer": { "src": "fotos/flyers/fecha-2.webp", "ancho": 1200, "alto": 1080, "alt": "Descripción de la imagen" }
+```
+
 ## Capitanes
 
 Los que arman los equipos (eligen de a un jugador, alternando). Se muestran enfrentados con una
@@ -94,9 +103,6 @@ animación arriba de la tabla. `jugador` tiene que estar en `jugadores` (de ahí
 
 - `cara`: PNG transparente de la cabeza estilo caricatura. Sin `cara` se usa la foto del jugador en un círculo.
 - `ropa`: `"buzo"` (buzo, short y medias) o `"remera"` (remera y pantalón). `caraY` baja (o sube) la cabeza en px.
-
-Con `"flyerCapitanes": "fotos/capitanes/flyer.webp"` se muestra esa imagen (1200×951) en lugar del dibujo,
-con el VS latiendo y un destello; al tocarla se abre en grande.
 
 Sin `capitanes` (o con otra cantidad que no sea 2) no se muestra nada.
 
