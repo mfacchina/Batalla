@@ -50,10 +50,10 @@
     "Agustin Aguero": "fotos/agustin-aguero.jpg"
   },
   "flyer": {
-    "src": "fotos/flyers/fecha-2.webp",
-    "ancho": 1200,
-    "alto": 1080,
-    "alt": "Fecha 2: Team Facchi (Facchina, Bau, Mati B, Juanse y Kun) festeja parado arriba de Team Manuco, tirado en el piso. Próxima batalla: fecha de oro, puntos x2."
+    "src": "fotos/flyers/fecha-2-foto.webp",
+    "ancho": 1100,
+    "alto": 1375,
+    "alt": "Fecha 2: Team Facchi (Bau, Mati B, Facchina con la copa, Juanse y Kun) festeja parado sobre Team Manuco (Bona, Manuco, Mona, Viegas y Mingro), tirado en el piso. Próxima batalla: fecha de oro, puntos x2."
   },
   "capitanes": [
     {

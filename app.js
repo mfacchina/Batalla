@@ -273,7 +273,7 @@ function renderCapitanes(data) {
   if (f && f.src) {
     const src = esc(f.src);
     el.innerHTML = `
-      <a class="board cap cap--flyer" href="${src}" target="_blank" rel="noopener">
+      <a class="board cap cap--flyer${f.alto > f.ancho ? ' cap--vertical' : ''}" href="${src}" target="_blank" rel="noopener">
         <img src="${src}"${f.ancho ? ` width="${Number(f.ancho)}" height="${Number(f.alto)}"` : ''} alt="${esc(f.alt || '')}">
         <span class="cap__destello" aria-hidden="true"></span>
       </a>`;

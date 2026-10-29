@@ -447,6 +447,7 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
 /* Flyer: entra con zoom y cada tanto pasa un destello */
 .board.cap--flyer { display: block; position: relative; max-width: 760px; margin: 0 auto; padding: 0; overflow: hidden; animation: cap-flyer 0.8s ease-out both; }
 .cap--flyer img { display: block; width: 100%; height: auto; }
+.board.cap--vertical { max-width: 560px; }
 .cap__destello { position: absolute; inset: 0; background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.22) 50%, transparent 60%); transform: translateX(-100%); pointer-events: none; animation: cap-destello 5s ease-in-out 1.2s infinite; }
 @keyframes cap-flyer { from { opacity: 0; transform: scale(1.04); } to { opacity: 1; transform: none; } }
 @keyframes cap-destello { 0%, 70% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
