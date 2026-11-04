@@ -50,10 +50,10 @@
     "Agustin Aguero": "fotos/agustin-aguero.jpg"
   },
   "flyer": {
-    "src": "fotos/flyers/fecha-3-previa.webp",
+    "src": "fotos/flyers/fecha-3-resultado.webp",
     "ancho": 1100,
     "alto": 1375,
-    "alt": "Fecha de oro, hoy: Bona contra Mingro, capitanes. Puntos x2. Los capitanes eligen los equipos."
+    "alt": "Fecha 3, fecha de oro: Bona aplastó a Mingro. Bona, capitán victorioso, con el pie sobre una pelota dorada; Mingro de rodillas en el césped."
   },
   "galeria": [
     {
@@ -79,6 +79,12 @@
       "tipo": "previa",
       "titulo": "Fecha de oro · Capitanes: Bona vs Mingro",
       "src": "fotos/flyers/fecha-3-previa.webp"
+    },
+    {
+      "fecha": "2026-11-04",
+      "tipo": "resultado",
+      "titulo": "Bona aplastó a Mingro · capitán victorioso",
+      "src": "fotos/flyers/fecha-3-resultado.webp"
     }
   ],
   "capitanes": [
