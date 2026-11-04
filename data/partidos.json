@@ -156,7 +156,29 @@
       "fecha": "2026-11-04",
       "hora": "19:00",
       "sede": "KDT",
-      "nota": "Fecha de oro · los capitanes arman los equipos"
+      "nota": "Fecha de oro · puntos x2",
+      "equipos": [
+        {
+          "nombre": "Team Mingro",
+          "jugadores": [
+            "Mingro",
+            "Pal",
+            "Matias Balanho",
+            "Pipi",
+            "Juanse"
+          ]
+        },
+        {
+          "nombre": "Team Bona",
+          "jugadores": [
+            "Bona",
+            "Bau",
+            "Manuel Romero",
+            "Mona",
+            "Facchina"
+          ]
+        }
+      ]
     }
   ],
   "suspendidas": [],
