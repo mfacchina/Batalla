@@ -480,10 +480,12 @@ function renderDelMes(meses) {
     const titulo = m.cerrado
       ? (m.ganadores.length ? `🏅 <b>${nombres}</b>` : 'Sin ganador')
       : (m.ganadores.length ? `En curso · va ganando <b>${nombres}</b>` : 'En curso');
+    const cogidos = m.cogidos.length > 5 ? `${m.cogidos.length} empatados` : lista(m.cogidos.map((c) => c.nombre));
     return `
       <div class="mes${m.cerrado ? '' : ' mes--curso'}">
         <div class="mes__head"><h3>${nombreMes(m.mes)}</h3><span>${titulo}</span></div>
         <ol class="mes__top">${top.map((j) => `<li><span>${j.pos}º</span> ${esc(j.nombre)} <small>${fmt(j.indice)} · ${j.pj} PJ</small></li>`).join('')}</ol>
+        ${m.cogidos.length ? `<p class="mes__cogido">🤡 ${m.cerrado ? 'Cogido del mes' : 'Va de cogido'}: <b>${cogidos}</b> <small>${fmt(m.cogidos[0].indice)} · DG ${m.cogidos[0].dg > 0 ? '+' : ''}${m.cogidos[0].dg}</small></p>` : ''}
       </div>`;
   }).join('');
 }
@@ -547,6 +549,7 @@ function abrirPerfil(estado, nombre) {
   const evo = evolucion(data, j.nombre).filter((e) => e.pos);
   const ultimos = [...j.forma].reverse().slice(0, 5);
   const delMes = meses.filter((m) => m.cerrado && m.ganadores.some((g) => clave(g.nombre) === clave(j.nombre)));
+  const cogidoMes = meses.filter((m) => m.cerrado && m.cogidos.some((c) => clave(c.nombre) === clave(j.nombre)));
   const recCruce = (c) => `${c.pj} PJ · ${c.g}G ${c.e}E ${c.p}P`;
   const tile = (valor, label) => `<div class="tile"><b>${valor}</b><span>${label}</span></div>`;
 
@@ -559,6 +562,7 @@ function abrirPerfil(estado, nombre) {
         ${j.figuras ? `<p class="perfil__mes">🎖️ Jugador del partido: ${j.figuras} ${j.figuras === 1 ? 'vez' : 'veces'}</p>` : ''}
         ${j.wo ? `<p class="perfil__tarjetas">🟨 ${j.wo} ${j.wo === 1 ? 'amonestación' : 'amonestaciones'} (baja tarde)</p>` : ''}
         ${delMes.length ? `<p class="perfil__mes">📅 Jugador del mes: ${delMes.map((m) => nombreMes(m.mes)).join(', ')}</p>` : ''}
+        ${cogidoMes.length ? `<p class="perfil__mes">🤡 Cogido del mes: ${cogidoMes.map((m) => nombreMes(m.mes)).join(', ')}</p>` : ''}
       </div>
     </div>
     <div class="perfil__stats">

@@ -167,6 +167,15 @@ function calcularTabla(data, rango = {}) {
 const buscarJugador = (tabla, nombre) => tabla.jugadores.find((j) => clave(j.nombre) === clave(nombre));
 
 // Jugador del mes: misma fórmula del índice, solo con las fechas de ese mes
+// Cogido del mes: el peor índice del mes; si empatan, la peor diferencia de gol
+function cogidosDe(tabla) {
+  const jug = tabla.jugadores.filter((j) => j.pj > 0);
+  if (jug.length < 2) return [];
+  const peor = (a, b) => Math.round(a.indice * 1000) - Math.round(b.indice * 1000) || a.dg - b.dg;
+  const ultimo = [...jug].sort(peor)[0];
+  return jug.filter((j) => peor(j, ultimo) === 0);
+}
+
 function jugadoresDelMes(data) {
   const hoyMes = isoHoy().slice(0, 7);
   const terminada = temporadaTerminada(data);
@@ -177,6 +186,7 @@ function jugadoresDelMes(data) {
       mes,
       cerrado: terminada || mes < hoyMes,
       ganadores: tabla.jugadores.filter((j) => j.pos === 1),
+      cogidos: cogidosDe(tabla),
       tabla,
     };
   });
@@ -210,6 +220,7 @@ const LOGROS = [
   { id: 'veterano', icono: '🎖️', nombre: 'Veterano', desc: 'Jugar 10 partidos', ok: (j) => j.pj - j.wo >= 10 },
   { id: 'fairplay', icono: '🤝', nombre: 'Fair play', desc: 'Jugar 8 partidos sin amonestaciones', ok: (j) => j.pj - j.wo >= 8 && j.wo === 0 },
   { id: 'mes', icono: '📅', nombre: 'Jugador del mes', desc: 'Ganar el premio al jugador del mes', ok: (j, ctx) => ctx.delMes.has(clave(j.nombre)) },
+  { id: 'cogido', icono: '🤡', nombre: 'Cogido del mes', desc: 'Terminar último en el índice de un mes', ok: (j, ctx) => ctx.cogidos.has(clave(j.nombre)) },
 ];
 
 function logrosDe(j, ctx) {
@@ -219,8 +230,12 @@ function logrosDe(j, ctx) {
 // Contexto compartido para logros: fechas totales y ganadores de meses cerrados
 function contextoLogros(data, tabla, meses) {
   const delMes = new Set();
-  for (const m of meses) if (m.cerrado) for (const g of m.ganadores) delMes.add(clave(g.nombre));
-  return { totalFechas: tabla.totalFechas, delMes };
+  const cogidos = new Set();
+  for (const m of meses.filter((x) => x.cerrado)) {
+    for (const g of m.ganadores) delMes.add(clave(g.nombre));
+    for (const c of m.cogidos) cogidos.add(clave(c.nombre));
+  }
+  return { totalFechas: tabla.totalFechas, delMes, cogidos };
 }
 
 // Récords de la temporada
