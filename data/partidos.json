@@ -149,14 +149,10 @@
       "resultado": "B",
       "diferencia": 10,
       "figura": "Juanse"
-    }
-  ],
-  "proximos": [
+    },
     {
       "fecha": "2026-11-04",
-      "hora": "19:00",
       "sede": "KDT",
-      "nota": "Fecha de oro · puntos x2",
       "equipos": [
         {
           "nombre": "Team Mingro",
@@ -178,9 +174,12 @@
             "Facchina"
           ]
         }
-      ]
+      ],
+      "resultado": "B",
+      "diferencia": 1
     }
   ],
+  "proximos": [],
   "suspendidas": [],
   "historial": []
 }
