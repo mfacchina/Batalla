@@ -158,7 +158,39 @@ function renderTabla(data, tabla, filtro = '') {
 
 // ---------- Partidos ----------
 
-function tarjetaPartido(p, numeros, oro, k) {
+// ---------- Galería de flyers ----------
+
+const TIPOS_FLYER = { previa: 'Previa', resultado: 'Resultado' };
+const flyersDe = (data, fecha) => (data.galeria || []).filter((f) => f.fecha === fecha);
+
+const miniFlyer = (f) => `
+  <a class="mini-flyer" href="${esc(f.src)}" target="_blank" rel="noopener" title="${esc(f.titulo || '')}">
+    <img src="${esc(f.src)}" alt="${esc(f.titulo || 'Flyer')}" loading="lazy">
+  </a>`;
+
+function renderGaleria(data) {
+  const el = $('#galeria');
+  const items = data.galeria || [];
+  if (!items.length) {
+    el.innerHTML = '<p class="vacio">Todavía no hay flyers.</p>';
+    return;
+  }
+  const numeros = numerarFechas([...data.partidos, ...proximosDe(data)]);
+  const fechas = [...new Set(items.map((f) => f.fecha))].sort().reverse();
+  el.innerHTML = fechas.map((fecha) => `
+    <div class="galeria__fecha">
+      <h3>${numeros.has(fecha) ? `Fecha ${numeros.get(fecha)} · ` : ''}${formatearFecha(fecha)}</h3>
+      <div class="galeria__grilla">
+        ${flyersDe(data, fecha).map((f) => `
+          <a class="galeria__item" href="${esc(f.src)}" target="_blank" rel="noopener">
+            <img src="${esc(f.src)}" alt="${esc(f.titulo || 'Flyer')}" loading="lazy">
+            <span>${f.tipo && TIPOS_FLYER[f.tipo] ? `<b>${TIPOS_FLYER[f.tipo]}</b> · ` : ''}${esc(f.titulo || '')}</span>
+          </a>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function tarjetaPartido(p, numeros, oro, k, data) {
   const res = resultadoDe(p);
   const [a, b] = p.equipos;
   const estado = (letra) => (res === 'empate' ? 'empate' : res === letra ? 'ganador' : 'perdedor');
@@ -184,6 +216,7 @@ function tarjetaPartido(p, numeros, oro, k) {
         <div class="marcador">${marcador}</div>
         ${equipoHtml(b, 'B')}
       </div>
+      ${data && flyersDe(data, p.fecha).length ? `<div class="partido__flyers">📸 ${flyersDe(data, p.fecha).map(miniFlyer).join('')}</div>` : ''}
     </article>`;
 }
 
@@ -427,7 +460,7 @@ function renderPartidos(data, jugador = null) {
     return;
   }
   cont.innerHTML = proximos + eventos.map((ev) => (ev.tipo === 'partido'
-    ? tarjetaPartido(ev.p, numeros, oro, k)
+    ? tarjetaPartido(ev.p, numeros, oro, k, data)
     : tarjetaSuspendida(ev.s, k))).join('');
 }
 
@@ -720,6 +753,7 @@ async function init() {
   renderDelMes(meses);
   renderRecords(data, tabla);
   renderSalon(data, tabla, meses);
+  renderGaleria(data);
   renderReglamento(data);
 
   document.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => activarTab(t.dataset.tab)));

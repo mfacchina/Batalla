@@ -50,26 +50,45 @@
     "Agustin Aguero": "fotos/agustin-aguero.jpg"
   },
   "flyer": {
-    "src": "fotos/flyers/fecha-2-foto.webp",
+    "src": "fotos/flyers/fecha-3-previa.webp",
     "ancho": 1100,
     "alto": 1375,
-    "alt": "Fecha 2: Team Facchi (Bau, Mati B, Facchina con la copa, Juanse y Kun) festeja parado sobre Team Manuco (Bona, Manuco, Mona, Viegas y Mingro), tirado en el piso. Próxima batalla: fecha de oro, puntos x2."
+    "alt": "Fecha de oro, hoy: Bona contra Mingro, capitanes. Puntos x2. Los capitanes eligen los equipos."
   },
-  "capitanes": [
+  "galeria": [
     {
-      "jugador": "Bau",
-      "nombre": "Bautista Mato",
-      "remera": "#2f5fd0",
-      "cara": "fotos/capitanes/bau.png",
-      "ropa": "buzo",
-      "caraY": 20
+      "fecha": "2026-10-28",
+      "tipo": "previa",
+      "titulo": "Capitanes: Bautista Mato vs Manuel Mato",
+      "src": "fotos/flyers/fecha-2-previa.webp"
     },
     {
-      "jugador": "Manuco",
-      "nombre": "Manuel Mato",
-      "remera": "#22252b",
-      "cara": "fotos/capitanes/manuco.png",
-      "ropa": "remera"
+      "fecha": "2026-10-28",
+      "tipo": "resultado",
+      "titulo": "Team Facchi arrasó por 10",
+      "src": "fotos/flyers/fecha-2-foto.webp"
+    },
+    {
+      "fecha": "2026-10-28",
+      "tipo": "resultado",
+      "titulo": "Team Facchi arrasó por 10 (caricatura)",
+      "src": "fotos/flyers/fecha-2-caricatura.webp"
+    },
+    {
+      "fecha": "2026-11-04",
+      "tipo": "previa",
+      "titulo": "Fecha de oro · Capitanes: Bona vs Mingro",
+      "src": "fotos/flyers/fecha-3-previa.webp"
+    }
+  ],
+  "capitanes": [
+    {
+      "jugador": "Bona",
+      "nombre": "Bona"
+    },
+    {
+      "jugador": "Mingro",
+      "nombre": "Mingro"
     }
   ],
   "partidos": [
@@ -132,7 +151,14 @@
       "figura": "Juanse"
     }
   ],
-  "proximos": [],
+  "proximos": [
+    {
+      "fecha": "2026-11-04",
+      "hora": "19:00",
+      "sede": "KDT",
+      "nota": "Fecha de oro · los capitanes arman los equipos"
+    }
+  ],
   "suspendidas": [],
   "historial": []
 }

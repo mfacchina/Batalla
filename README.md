@@ -88,6 +88,19 @@ sobre la animación de los capitanes; al tocarla se abre en grande. Para sacarla
 "flyer": { "src": "fotos/flyers/fecha-2.webp", "ancho": 1200, "alto": 1080, "alt": "Descripción de la imagen" }
 ```
 
+## Galería de batallas
+
+Todos los flyers quedan en `galeria`, agrupados por fecha en **Destacados → Galería de batallas**,
+y como miniaturas en la tarjeta de cada partido. `tipo` es `"previa"` o `"resultado"`:
+
+```json
+"galeria": [
+  { "fecha": "2026-10-28", "tipo": "resultado", "titulo": "Team Facchi arrasó por 10", "src": "fotos/flyers/fecha-2-foto.webp" }
+]
+```
+
+Al cambiar el flyer de la pantalla principal, el anterior ya está en la galería: solo se actualiza `flyer`.
+
 ## Capitanes
 
 Los que arman los equipos (eligen de a un jugador, alternando). Se muestran enfrentados con una

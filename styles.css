@@ -495,6 +495,18 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
 .suspendida__body li.yo { color: var(--oro); font-weight: 800; }
 .suspendida__nota { margin: 0; font-size: 0.78rem; color: var(--texto-suave); }
 
+/* ---------- Galería ---------- */
+.galeria__fecha + .galeria__fecha { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--borde); }
+.galeria__fecha h3 { margin: 0 0 10px; font-size: 1.3rem; }
+.galeria__grilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.galeria__item { display: block; color: var(--tiza); text-decoration: none; }
+.galeria__item img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: top; border-radius: 10px; border: 1px solid var(--borde); transition: transform 0.15s; }
+.galeria__item:hover img { transform: scale(1.03); }
+.galeria__item span { display: block; margin-top: 6px; font-size: 0.78rem; color: var(--texto-suave); }
+.galeria__item b { color: var(--oro); }
+.partido__flyers { display: flex; align-items: center; gap: 8px; padding: 0 16px 14px; font-size: 1.1rem; }
+.mini-flyer img { display: block; width: 46px; height: 58px; object-fit: cover; object-position: top; border-radius: 6px; border: 1px solid var(--borde); }
+
 /* ---------- Destacados ---------- */
 .destacado + .destacado { margin-top: 16px; }
 .destacado h2 { margin-bottom: 10px; }
