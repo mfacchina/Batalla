@@ -89,12 +89,12 @@
   ],
   "capitanes": [
     {
-      "jugador": "Bona",
-      "nombre": "Bona"
+      "jugador": "Viegas",
+      "nombre": "Viegas"
     },
     {
-      "jugador": "Mingro",
-      "nombre": "Mingro"
+      "jugador": "Pipi",
+      "nombre": "Pipi"
     }
   ],
   "partidos": [
@@ -186,7 +186,14 @@
       "figura": "Bona"
     }
   ],
-  "proximos": [],
+  "proximos": [
+    {
+      "fecha": "2026-11-11",
+      "hora": "19:00",
+      "sede": "KDT",
+      "nota": "Los capitanes arman los equipos"
+    }
+  ],
   "suspendidas": [],
   "historial": []
 }
