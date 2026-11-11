@@ -50,10 +50,10 @@
     "Agustin Aguero": "fotos/agustin-aguero.jpg"
   },
   "flyer": {
-    "src": "fotos/flyers/fecha-4-previa.webp",
+    "src": "fotos/flyers/fecha-4-resultado.webp",
     "ancho": 1100,
     "alto": 1375,
-    "alt": "Fecha 4, hoy 19 hs en KDT: El Lobo (Pipi) contra La Cabra (Viegas), capitanes. ¿Se come el Lobo a la Cabra?"
+    "alt": "Fecha 4: La Cabra (Viegas) aplasta al Lobo (Pipi), tirado en el césped bajo un bolso que dice 5 goles."
   },
   "galeria": [
     {
@@ -91,6 +91,12 @@
       "tipo": "previa",
       "titulo": "El Lobo vs la Cabra · Pipi vs Viegas",
       "src": "fotos/flyers/fecha-4-previa.webp"
+    },
+    {
+      "fecha": "2026-11-11",
+      "tipo": "resultado",
+      "titulo": "La Cabra se comió al Lobo · 5 goles",
+      "src": "fotos/flyers/fecha-4-resultado.webp"
     }
   ],
   "capitanes": [
