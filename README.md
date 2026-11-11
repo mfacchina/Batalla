@@ -12,7 +12,8 @@ Ranking de jugadores de fútbol 5, hosteado en GitHub Pages.
 
 Cada jugador suma los puntos de su equipo en cada partido que juega.
 
-Orden de la tabla: **puntos → diferencia de gol → partidos ganados**. Promedio y asistencia se muestran, pero no definen posiciones.
+**Índice Batalla = promedio de puntos × √asistencia** (asistencia = fechas jugadas ÷ fechas totales).
+Orden de la tabla: índice → partidos jugados → puntos → diferencia de gol.
 
 **Fechas de oro:** cada `temporada.oroCada` fechas jugadas (hoy 3: la 3ª, 6ª, 9ª…) los puntos
 valen doble (la DG no). Las fechas se numeran por orden de fecha entre las que tienen partido,

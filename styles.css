@@ -256,8 +256,8 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
   white-space: nowrap;
 }
 .tabla .c-name { text-align: left; font-weight: 600; }
-.tabla .c-pts { font-family: 'Bebas Neue', Impact, sans-serif; font-size: 1.5rem; letter-spacing: 0.04em; color: var(--oro); }
-.tabla th.c-pts { font-size: 0.8rem; color: var(--oro); }
+.tabla .c-ind { font-family: 'Bebas Neue', Impact, sans-serif; font-size: 1.5rem; letter-spacing: 0.04em; color: var(--oro); }
+.tabla th.c-ind { font-size: 0.8rem; color: var(--oro); }
 .tabla .c-pos { width: 44px; }
 
 .fila { cursor: pointer; transition: background 0.12s; }
@@ -772,7 +772,7 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
   .solo-desk { display: none; }
   .tabla .c-pos { width: 34px; }
   .tabla .c-name { white-space: normal; line-height: 1.2; }
-  .tabla .c-pts { font-size: 1.3rem; }
+  .tabla .c-ind { font-size: 1.3rem; }
   .c-forma { padding-left: 2px !important; padding-right: 0 !important; }
   .badge { width: 15px; height: 17px; margin: 0; font-size: 0.58rem; border-radius: 4px; }
   .podio__block { font-size: 2rem; }

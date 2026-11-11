@@ -145,15 +145,16 @@ function calcularTabla(data, rango = {}) {
     }
   }
 
-  // Promedio de puntos y asistencia: se muestran, pero no definen posiciones
+  // Índice Batalla = promedio de puntos × √asistencia
   const totalFechas = new Set(eventos.map((e) => e.fecha)).size;
   const lista = [...jugadores.values()].map((j) => {
     const prom = j.pj ? j.pts / j.pj : 0;
     const asist = totalFechas ? j.presentes.size / totalFechas : 0;
-    return Object.assign(j, { prom, asist });
+    return Object.assign(j, { prom, asist, indice: prom * Math.sqrt(asist) });
   });
-  // Orden: puntos → diferencia de gol → partidos ganados
-  const comparar = (a, b) => b.pts - a.pts || b.dg - a.dg || b.pg - a.pg;
+  // Se compara redondeado para que dos índices que se ven iguales empaten
+  const r3 = (n) => Math.round(n * 1000);
+  const comparar = (a, b) => r3(b.indice) - r3(a.indice) || b.pj - a.pj || b.pts - a.pts || b.dg - a.dg;
   // Los que todavía no jugaron van al fondo, sin posición
   lista.sort((a, b) => (b.pj > 0) - (a.pj > 0) || comparar(a, b) || a.nombre.localeCompare(b.nombre, 'es'));
   lista.forEach((j, i) => {
@@ -166,11 +167,11 @@ function calcularTabla(data, rango = {}) {
 const buscarJugador = (tabla, nombre) => tabla.jugadores.find((j) => clave(j.nombre) === clave(nombre));
 
 // Jugador del mes: misma fórmula del índice, solo con las fechas de ese mes
-// Cogido del mes: el que menos puntos sumó en el mes; si empatan, la peor diferencia de gol
+// Cogido del mes: el peor índice del mes; si empatan, la peor diferencia de gol
 function cogidosDe(tabla) {
   const jug = tabla.jugadores.filter((j) => j.pj > 0);
   if (jug.length < 2) return [];
-  const peor = (a, b) => a.pts - b.pts || a.dg - b.dg;
+  const peor = (a, b) => Math.round(a.indice * 1000) - Math.round(b.indice * 1000) || a.dg - b.dg;
   const ultimo = [...jug].sort(peor)[0];
   return jug.filter((j) => peor(j, ultimo) === 0);
 }
