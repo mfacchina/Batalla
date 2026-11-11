@@ -120,7 +120,7 @@ function renderPodio(data, tabla) {
         <div class="podio__medal">${medallas[lugar - 1]}</div>
         ${avatar(data, j.nombre, 'md')}
         <div class="podio__name">${esc(j.nombre)}</div>
-        <div class="podio__pts">${fmt(j.indice)} <small>índice</small></div>
+        <div class="podio__pts">${j.pts} <small>pts</small></div>
         <div class="podio__sub">${j.pts} pts · ${j.pj} PJ</div>
         <div class="podio__block">${j.pos}</div>
       </button>`;
@@ -143,8 +143,7 @@ function renderTabla(data, tabla, filtro = '') {
     <tr class="fila ${j.pos <= 3 ? `top top-${j.pos}` : ''}" data-jugador="${esc(j.nombre)}" tabindex="0">
       <td class="c-pos"><span class="pos">${j.pos ?? '–'}</span></td>
       <td class="c-name"><span class="solo-desk">${avatar(data, j.nombre)}</span>${esc(j.nombre)}${iconosJugador(j)}</td>
-      <td class="c-ind">${j.pj ? fmt(j.indice) : '–'}</td>
-      <td>${j.pts}</td>
+      <td class="c-pts">${j.pts}</td>
       <td>${j.pj}</td>
       <td class="c-opt">${j.pg}</td>
       <td class="c-opt">${j.pe}</td>
@@ -484,8 +483,8 @@ function renderDelMes(meses) {
     return `
       <div class="mes${m.cerrado ? '' : ' mes--curso'}">
         <div class="mes__head"><h3>${nombreMes(m.mes)}</h3><span>${titulo}</span></div>
-        <ol class="mes__top">${top.map((j) => `<li><span>${j.pos}º</span> ${esc(j.nombre)} <small>${fmt(j.indice)} · ${j.pj} PJ</small></li>`).join('')}</ol>
-        ${m.cogidos.length ? `<p class="mes__cogido">🤡 ${m.cerrado ? 'Cogido del mes' : 'Va de cogido'}: <b>${cogidos}</b> <small>${fmt(m.cogidos[0].indice)} · DG ${m.cogidos[0].dg > 0 ? '+' : ''}${m.cogidos[0].dg}</small></p>` : ''}
+        <ol class="mes__top">${top.map((j) => `<li><span>${j.pos}º</span> ${esc(j.nombre)} <small>${j.pts} pts · ${j.pj} PJ</small></li>`).join('')}</ol>
+        ${m.cogidos.length ? `<p class="mes__cogido">🤡 ${m.cerrado ? 'Cogido del mes' : 'Va de cogido'}: <b>${cogidos}</b> <small>${m.cogidos[0].pts} pts · DG ${m.cogidos[0].dg > 0 ? '+' : ''}${m.cogidos[0].dg}</small></p>` : ''}
       </div>`;
   }).join('');
 }
@@ -558,7 +557,7 @@ function abrirPerfil(estado, nombre) {
       ${avatar(data, j.nombre, 'lg')}
       <div>
         <h2>${esc(j.nombre)}</h2>
-        <p>${j.pos ? `<b>${j.pos}º</b> en la tabla · Índice <b>${fmt(j.indice)}</b>` : 'Todavía no jugó'}</p>
+        <p>${j.pos ? `<b>${j.pos}º</b> en la tabla · <b>${j.pts}</b> pts` : 'Todavía no jugó'}</p>
         ${j.figuras ? `<p class="perfil__mes">🎖️ Jugador del partido: ${j.figuras} ${j.figuras === 1 ? 'vez' : 'veces'}</p>` : ''}
         ${j.wo ? `<p class="perfil__tarjetas">🟨 ${j.wo} ${j.wo === 1 ? 'amonestación' : 'amonestaciones'} (baja tarde)</p>` : ''}
         ${delMes.length ? `<p class="perfil__mes">📅 Jugador del mes: ${delMes.map((m) => nombreMes(m.mes)).join(', ')}</p>` : ''}
@@ -566,7 +565,6 @@ function abrirPerfil(estado, nombre) {
       </div>
     </div>
     <div class="perfil__stats">
-      ${tile(j.pj ? fmt(j.indice) : '–', 'Índice')}
       ${tile(j.pts, 'Puntos')}
       ${tile(j.pj, 'PJ')}
       ${tile(`${j.pg}-${j.pe}-${j.pp}`, 'G-E-P')}

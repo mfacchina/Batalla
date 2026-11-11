@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2026-11-05.1">
+  <link rel="stylesheet" href="styles.css?v=2026-11-11.1">
 </head>
 <body>
   <header class="hero">
@@ -45,8 +45,7 @@
               <tr>
                 <th class="c-pos">#</th>
                 <th class="c-name">Jugador</th>
-                <th title="Índice Batalla = promedio × √asistencia" class="c-ind"><span class="solo-desk">Índice</span><span class="solo-mob">Índ.</span></th>
-                <th title="Puntos">PTS</th>
+                <th title="Puntos" class="c-pts">PTS</th>
                 <th title="Partidos jugados">PJ</th>
                 <th title="Partidos ganados" class="c-opt">PG</th>
                 <th title="Partidos empatados" class="c-opt">PE</th>
@@ -60,7 +59,7 @@
             <tbody id="tabla-body"></tbody>
           </table>
         </div>
-        <p class="hint">Ordenado por <b>Índice Batalla</b> (ver Reglamento). ⭐ = fecha de oro. Tocá un jugador para ver su perfil.</p>
+        <p class="hint">Ordenado por <b>puntos</b>; si empatan, diferencia de gol. ⭐ = fecha de oro. Tocá un jugador para ver su perfil.</p>
       </div>
       <div id="podio" class="podio"></div>
     </section>
@@ -76,7 +75,7 @@
     <section id="destacados" class="panel" role="tabpanel" hidden>
       <div class="board destacado">
         <h2>📅 Jugador del mes</h2>
-        <p class="hint hint--left">Mismo Índice Batalla, pero solo con las fechas de ese mes. El premio se define cuando termina el mes.</p>
+        <p class="hint hint--left">Los puntos sumados solo en las fechas de ese mes. El premio se define cuando termina el mes.</p>
         <div id="del-mes"></div>
       </div>
       <div class="board destacado">
@@ -107,14 +106,8 @@
         <h3>⭐ Fechas de oro</h3>
         <p>Cada <strong><span class="js-oro-cada">3</span> fechas jugadas</strong> hay una fecha de oro (la 3ª, 6ª, 9ª…). Se cuentan las fechas que realmente se juegan: si una semana no hay partido, no cuenta.</p>
         <p>En las fechas de oro los puntos valen <strong>doble</strong>: ganar da 6 pts, empatar 2 y perder 0. La diferencia de gol no se duplica. Arriba de la tabla se anuncia cuándo es la próxima.</p>
-        <h3>🏆 Índice Batalla</h3>
-        <p>La tabla se ordena por el Índice Batalla, que combina cuánto ganás con cuánto venís:</p>
-        <p class="formula">Índice = Promedio × √Asistencia</p>
-        <ul>
-          <li><strong>Promedio:</strong> puntos ÷ partidos jugados.</li>
-          <li><strong>Asistencia:</strong> fechas jugadas ÷ fechas totales de la temporada.</li>
-        </ul>
-        <p>El que va siempre conserva su promedio entero. El que falta pierde de a poco: con 50% de asistencia su promedio vale el 71%, y con 20% vale el 45%. Ir pocas veces y ganar no alcanza para quedar arriba.</p>
+        <h3>🏆 La tabla</h3>
+        <p>Manda el que más <strong>puntos</strong> suma en la temporada. Cuantas más fechas jugás y ganás, más sumás.</p>
         <h3>Cómo se arma cada fecha</h3>
         <ol>
           <li>Durante la semana se hace la votación en el grupo.</li>
@@ -135,17 +128,16 @@
         <p>Se desbloquean solos y se ven en el perfil de cada jugador:</p>
         <ul id="lista-logros" class="lista-logros"></ul>
         <h3>📅 Jugador del mes</h3>
-        <p>Se calcula con el mismo Índice Batalla, pero solo con las fechas de ese mes. Se define cuando termina el mes.</p>
+        <p>El que más puntos suma en las fechas de ese mes (mismo desempate que la tabla). Se define cuando termina el mes.</p>
         <h3>🤡 Cogido del mes</h3>
-        <p>El que termina <strong>último</strong> en el Índice Batalla del mes (si empatan, el de peor diferencia de gol). Se lleva el logro 🤡 y queda en su perfil para siempre.</p>
+        <p>El que <strong>menos puntos</strong> suma en el mes entre los que jugaron (si empatan, el de peor diferencia de gol). Se lleva el logro 🤡 y queda en su perfil para siempre.</p>
         <h3>🏛️ Salón de la fama</h3>
         <p>Al cerrar cada temporada quedan grabados el campeón, el podio, la mejor racha, el más presente y los jugadores del mes.</p>
         <h3>Orden de la tabla</h3>
         <ol>
-          <li>Índice Batalla</li>
-          <li>Partidos jugados (gana el que fue más veces)</li>
           <li>Puntos</li>
           <li>Diferencia de gol (suma la diferencia de cada partido: +N si ganó, −N si perdió)</li>
+          <li>Partidos ganados</li>
         </ol>
       </div>
     </section>
@@ -177,7 +169,7 @@
     <span id="actualizado"></span>
   </footer>
 
-  <script src="calculos.js?v=2026-11-05.1"></script>
-  <script src="app.js?v=2026-11-05.1"></script>
+  <script src="calculos.js?v=2026-11-11.1"></script>
+  <script src="app.js?v=2026-11-11.1"></script>
 </body>
 </html>
