@@ -50,10 +50,10 @@
     "Agustin Aguero": "fotos/agustin-aguero.jpg"
   },
   "flyer": {
-    "src": "fotos/flyers/fecha-3-resultado.webp",
+    "src": "fotos/flyers/fecha-4-previa.webp",
     "ancho": 1100,
     "alto": 1375,
-    "alt": "Fecha 3, fecha de oro: Bona aplastó a Mingro. Bona, capitán victorioso, con el pie sobre una pelota dorada; Mingro de rodillas en el césped."
+    "alt": "Fecha 4, hoy 19 hs en KDT: El Lobo (Pipi) contra La Cabra (Viegas), capitanes. ¿Se come el Lobo a la Cabra?"
   },
   "galeria": [
     {
@@ -85,6 +85,12 @@
       "tipo": "resultado",
       "titulo": "Bona aplastó a Mingro · capitán victorioso",
       "src": "fotos/flyers/fecha-3-resultado.webp"
+    },
+    {
+      "fecha": "2026-11-11",
+      "tipo": "previa",
+      "titulo": "El Lobo vs la Cabra · Pipi vs Viegas",
+      "src": "fotos/flyers/fecha-4-previa.webp"
     }
   ],
   "capitanes": [
@@ -191,7 +197,29 @@
       "fecha": "2026-11-11",
       "hora": "19:00",
       "sede": "KDT",
-      "nota": "Los capitanes arman los equipos"
+      "nota": "El Lobo vs la Cabra",
+      "equipos": [
+        {
+          "nombre": "Team Lobo 🐺",
+          "jugadores": [
+            "Pipi",
+            "Pal",
+            "Matias Balanho",
+            "Guido Ramirez",
+            "Mona"
+          ]
+        },
+        {
+          "nombre": "Team Cabra 🐐",
+          "jugadores": [
+            "Viegas",
+            "Bau",
+            "Mingro",
+            "Manuel Romero",
+            "Facchina"
+          ]
+        }
+      ]
     }
   ],
   "suspendidas": [],
