@@ -190,14 +190,10 @@
       "resultado": "B",
       "diferencia": 1,
       "figura": "Bona"
-    }
-  ],
-  "proximos": [
+    },
     {
       "fecha": "2026-11-11",
-      "hora": "19:00",
       "sede": "KDT",
-      "nota": "El Lobo vs la Cabra",
       "equipos": [
         {
           "nombre": "Team Lobo 🐺",
@@ -219,9 +215,12 @@
             "Facchina"
           ]
         }
-      ]
+      ],
+      "resultado": "A",
+      "diferencia": 5
     }
   ],
+  "proximos": [],
   "suspendidas": [],
   "historial": []
 }
