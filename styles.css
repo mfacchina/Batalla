@@ -478,6 +478,15 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
 .cap-tag { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--oro); margin: 0 6px; }
 .a-definir { margin: 8px 0 0; font-size: 0.8rem; font-style: italic; color: var(--texto-suave); }
 .proximo { margin-bottom: 16px; }
+.grabaciones { margin-bottom: 16px; }
+.grabaciones[hidden] { display: none; }
+.video { display: flex; align-items: center; gap: 14px; padding: 14px 18px; color: var(--tiza); text-decoration: none; border-color: rgba(224, 72, 62, 0.6); }
+.video:hover { border-color: var(--perdio); }
+.video__ico { font-size: 1.7rem; }
+.video b { display: block; font-family: 'Bebas Neue', Impact, sans-serif; font-size: 1.3rem; letter-spacing: 0.03em; }
+.video small { color: var(--texto-suave); font-size: 0.82rem; }
+.video__ir { margin-left: auto; font-weight: 800; color: var(--oro); white-space: nowrap; }
+.chip--video { text-decoration: none; }
 .proximo[hidden] { display: none; }
 .partido--proximo { border: 2px solid var(--gano); box-shadow: 0 0 24px rgba(47, 191, 91, 0.2); }
 .partido--proximo.partido--oro { border-color: var(--oro); }

@@ -56,6 +56,7 @@ Agregar un objeto al array `partidos` de `data/partidos.json`:
 - `nota`: opcional, texto libre.
 - Los nombres tienen que coincidir con los de `jugadores` (no distingue mayúsculas/minúsculas).
 
+- `grabaciones`: opcional, link a la carpeta de videos (Drive compartido "cualquiera con el link"). Se ve un botón 🎥 en la pantalla principal (última fecha con grabaciones) y en la tarjeta del partido.
 - `figura`: opcional, jugador del partido (tiene que haber jugado ese partido). Suma +1 pt, sin duplicarse en fecha de oro.
 - `sede`: opcional (`"KDT"`, `"Open Gallo"`), se muestra en la tarjeta del partido.
 

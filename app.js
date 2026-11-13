@@ -217,6 +217,7 @@ function tarjetaPartido(p, numeros, oro, k, data) {
         ${equipoHtml(b, 'B')}
       </div>
       ${data && flyersDe(data, p.fecha).length ? `<div class="partido__flyers">📸 ${flyersDe(data, p.fecha).map(miniFlyer).join('')}</div>` : ''}
+      ${p.grabaciones ? `<div class="partido__flyers"><a class="chip chip--video" href="${esc(p.grabaciones)}" target="_blank" rel="noopener">🎥 Ver grabaciones</a></div>` : ''}
     </article>`;
 }
 
@@ -404,6 +405,21 @@ function tarjetaProximo(data, p, k) {
         ${equipoHtml(b, 'B')}
       </div>
     </article>`;
+}
+
+// Botón a las grabaciones de la última fecha que las tenga
+function renderGrabaciones(data) {
+  const el = $('#grabaciones');
+  const p = [...data.partidos].reverse().find((x) => x.grabaciones);
+  if (!p) return;
+  const n = numerarFechas(data.partidos).get(p.fecha);
+  el.innerHTML = `
+    <a class="board video" href="${esc(p.grabaciones)}" target="_blank" rel="noopener">
+      <span class="video__ico">🎥</span>
+      <span><b>Grabaciones de la Fecha ${n}</b><small>${formatearFecha(p.fecha)} · Mirá los videos de la batalla</small></span>
+      <span class="video__ir">Ver ›</span>
+    </a>`;
+  el.hidden = false;
 }
 
 function renderProximos(data) {
@@ -750,6 +766,7 @@ async function init() {
   renderTemporada(data, tabla);
   renderProximaOro(data);
   renderCapitanes(data);
+  renderGrabaciones(data);
   renderProximos(data);
   renderTabla(data, tabla);
   renderPodio(data, tabla);
