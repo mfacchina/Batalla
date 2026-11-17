@@ -49,6 +49,14 @@
     "Pitu": "fotos/pitu.jpg",
     "Agustin Aguero": "fotos/agustin-aguero.jpg"
   },
+  "logrosEspeciales": [
+    {
+      "jugador": "Mona",
+      "icono": "🐞",
+      "nombre": "Descubridor de fallos",
+      "desc": "Encontró un fallo en la web de la Batalla"
+    }
+  ],
   "flyer": {
     "src": "fotos/flyers/fecha-4-resultado.webp",
     "ancho": 1100,

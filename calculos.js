@@ -223,8 +223,14 @@ const LOGROS = [
   { id: 'cogido', icono: '🤡', nombre: 'Cogido del mes', desc: 'Terminar último en el índice de un mes', ok: (j, ctx) => ctx.cogidos.has(clave(j.nombre)) },
 ];
 
+// Logros especiales: se asignan a mano en data.logrosEspeciales y no suman puntos
+const especialesDe = (data, nombre) => (data.logrosEspeciales || [])
+  .filter((l) => clave(l.jugador) === clave(nombre))
+  .map((l) => ({ id: `esp:${clave(l.nombre)}`, icono: l.icono || '🏅', nombre: l.nombre, desc: l.desc || '', especial: true, logrado: true }));
+
 function logrosDe(j, ctx) {
-  return LOGROS.map((l) => ({ ...l, logrado: Boolean(l.ok(j, ctx)) }));
+  const auto = LOGROS.map((l) => ({ ...l, logrado: Boolean(l.ok(j, ctx)) }));
+  return [...especialesDe(ctx.data, j.nombre), ...auto];
 }
 
 // Contexto compartido para logros: fechas totales y ganadores de meses cerrados
@@ -235,7 +241,7 @@ function contextoLogros(data, tabla, meses) {
     for (const g of m.ganadores) delMes.add(clave(g.nombre));
     for (const c of m.cogidos) cogidos.add(clave(c.nombre));
   }
-  return { totalFechas: tabla.totalFechas, delMes, cogidos };
+  return { data, totalFechas: tabla.totalFechas, delMes, cogidos };
 }
 
 // Récords de la temporada

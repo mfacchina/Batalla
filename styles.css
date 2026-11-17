@@ -597,6 +597,7 @@ main { max-width: 1040px; margin: 0 auto; padding: 16px 16px 40px; }
 .logros { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
 .logro { display: flex; gap: 8px; align-items: center; padding: 8px; border-radius: 10px; border: 1px dashed var(--borde); opacity: 0.45; filter: grayscale(1); }
 .logro--ok { opacity: 1; filter: none; border: 1px solid var(--oro); background: rgba(245, 197, 66, 0.08); }
+.logro--especial { border-color: #5aa9ff; background: rgba(90, 169, 255, 0.1); }
 .logro__ico { font-size: 1.5rem; line-height: 1; }
 .logro__txt { display: flex; flex-direction: column; font-size: 0.82rem; line-height: 1.25; }
 .logro__txt small { font-size: 0.7rem; color: var(--texto-suave); }

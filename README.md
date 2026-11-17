@@ -120,6 +120,16 @@ animación arriba de la tabla. `jugador` tiene que estar en `jugadores` (de ahí
 
 Sin `capitanes` (o con otra cantidad que no sea 2) no se muestra nada.
 
+## Logros especiales
+
+Logros que se dan a mano (no suman puntos). Aparecen solo en el perfil de ese jugador, con la celebración, y en el Reglamento:
+
+```json
+"logrosEspeciales": [
+  { "jugador": "Mona", "icono": "🐞", "nombre": "Descubridor de fallos", "desc": "Encontró un fallo en la web de la Batalla" }
+]
+```
+
 ## Fecha suspendida y baja tarde (W.O.)
 
 Agregar un objeto a `suspendidas`:

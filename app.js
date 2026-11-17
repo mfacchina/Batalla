@@ -596,7 +596,7 @@ function abrirPerfil(estado, nombre) {
     <h3>🏅 Logros <small>${logros.filter((l) => l.logrado).length}/${logros.length}</small></h3>
     <div class="logros">
       ${logros.map((l) => `
-        <div class="logro${l.logrado ? ' logro--ok' : ''}${esNuevo.has(l.id) ? ' logro--nuevo' : ''}" title="${esc(l.desc)}">
+        <div class="logro${l.logrado ? ' logro--ok' : ''}${l.especial ? ' logro--especial' : ''}${esNuevo.has(l.id) ? ' logro--nuevo' : ''}" title="${esc(l.desc)}">
           <span class="logro__ico">${l.icono}</span>
           <span class="logro__txt"><b>${esc(l.nombre)}</b><small>${esc(l.desc)}</small></span>
         </div>`).join('')}
@@ -713,7 +713,8 @@ function cerrarPerfil() {
 
 function renderReglamento(data) {
   document.querySelectorAll('.js-oro-cada').forEach((e) => { e.textContent = oroCadaDe(data) || '–'; });
-  $('#lista-logros').innerHTML = LOGROS.map((l) => `<li><span>${l.icono}</span> <b>${esc(l.nombre)}:</b> ${esc(l.desc)}</li>`).join('');
+  const especiales = (data.logrosEspeciales || []).map((l) => `<li><span>${esc(l.icono || '🏅')}</span> <b>${esc(l.nombre)}</b> <small>(especial · ${esc(l.jugador)})</small>: ${esc(l.desc || '')}</li>`);
+  $('#lista-logros').innerHTML = LOGROS.map((l) => `<li><span>${l.icono}</span> <b>${esc(l.nombre)}:</b> ${esc(l.desc)}</li>`).concat(especiales).join('');
 }
 
 // ---------- Navegación ----------
