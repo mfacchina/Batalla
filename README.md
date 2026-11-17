@@ -126,7 +126,7 @@ Logros que se dan a mano (no suman puntos). Aparecen solo en el perfil de ese ju
 
 ```json
 "logrosEspeciales": [
-  { "jugador": "Mona", "icono": "🐞", "nombre": "Descubridor de fallos", "desc": "Encontró un fallo en la web de la Batalla" }
+  { "jugador": "Mona", "icono": "🐞", "nombre": "Descubridor de fallos", "desc": "Encontró un fallo en la IA que sortea qué capitán elige primero" }
 ]
 ```
 
