@@ -234,16 +234,37 @@
       "diferencia": 5,
       "figura": "Bau",
       "grabaciones": "https://drive.google.com/drive/folders/1Yg2dLro4t9LMgdG-0y_9BH0PYdnULits?usp=drive_link"
-    }
-  ],
-  "proximos": [
+    },
     {
       "fecha": "2026-11-18",
-      "hora": "19:00",
       "sede": "KDT",
-      "nota": "Los capitanes arman los equipos"
+      "equipos": [
+        {
+          "nombre": "Team Bau",
+          "jugadores": [
+            "Bau",
+            "Facchina",
+            "Mona",
+            "Pipi",
+            "Bona"
+          ]
+        },
+        {
+          "nombre": "Team Romero",
+          "jugadores": [
+            "Manuel Romero",
+            "Juanse",
+            "Juan Molle",
+            "Viegas",
+            "Mingro"
+          ]
+        }
+      ],
+      "resultado": "A",
+      "diferencia": 18
     }
   ],
+  "proximos": [],
   "suspendidas": [],
   "historial": []
 }
