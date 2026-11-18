@@ -218,7 +218,6 @@ const LOGROS = [
   { id: 'paliza', icono: '💥', nombre: 'Paliza', desc: 'Ganar por 5 goles o más', ok: (j) => j.mayorGoleada >= 5 },
   { id: 'presente', icono: '🙋', nombre: 'Siempre presente', desc: '100% de asistencia con 4 fechas o más', ok: (j, ctx) => ctx.totalFechas >= 4 && j.presentes.size === ctx.totalFechas },
   { id: 'veterano', icono: '🎖️', nombre: 'Veterano', desc: 'Jugar 10 partidos', ok: (j) => j.pj - j.wo >= 10 },
-  { id: 'fairplay', icono: '🤝', nombre: 'Fair play', desc: 'Jugar 8 partidos sin amonestaciones', ok: (j) => j.pj - j.wo >= 8 && j.wo === 0 },
   { id: 'mes', icono: '📅', nombre: 'Jugador del mes', desc: 'Ganar el premio al jugador del mes', ok: (j, ctx) => ctx.delMes.has(clave(j.nombre)) },
   { id: 'cogido', icono: '🤡', nombre: 'Cogido del mes', desc: 'Terminar último en el índice de un mes', ok: (j, ctx) => ctx.cogidos.has(clave(j.nombre)) },
 ];
