@@ -55,6 +55,30 @@
       "icono": "🐞",
       "nombre": "Descubridor de fallos",
       "desc": "Encontró un fallo en la IA que sortea qué capitán elige primero"
+    },
+    {
+      "jugador": "Bona",
+      "icono": "🎁",
+      "nombre": "Hacer ganar a Pipi",
+      "desc": "Le dio a Pipi su primera victoria de la temporada (Fecha 5)"
+    },
+    {
+      "jugador": "Bau",
+      "icono": "🎁",
+      "nombre": "Hacer ganar a Pipi",
+      "desc": "Le dio a Pipi su primera victoria de la temporada (Fecha 5)"
+    },
+    {
+      "jugador": "Facchina",
+      "icono": "🎁",
+      "nombre": "Hacer ganar a Pipi",
+      "desc": "Le dio a Pipi su primera victoria de la temporada (Fecha 5)"
+    },
+    {
+      "jugador": "Mona",
+      "icono": "🎁",
+      "nombre": "Hacer ganar a Pipi",
+      "desc": "Le dio a Pipi su primera victoria de la temporada (Fecha 5)"
     }
   ],
   "flyer": {
