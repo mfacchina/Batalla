@@ -713,7 +713,13 @@ function cerrarPerfil() {
 
 function renderReglamento(data) {
   document.querySelectorAll('.js-oro-cada').forEach((e) => { e.textContent = oroCadaDe(data) || '–'; });
-  const especiales = (data.logrosEspeciales || []).map((l) => `<li><span>${esc(l.icono || '🏅')}</span> <b>${esc(l.nombre)}</b> <small>(especial · ${esc(l.jugador)})</small>: ${esc(l.desc || '')}</li>`);
+  // Un mismo logro especial dado a varios jugadores va en una sola línea
+  const porNombre = new Map();
+  for (const l of data.logrosEspeciales || []) {
+    if (!porNombre.has(l.nombre)) porNombre.set(l.nombre, { ...l, jugadores: [] });
+    porNombre.get(l.nombre).jugadores.push(l.jugador);
+  }
+  const especiales = [...porNombre.values()].map((l) => `<li><span>${esc(l.icono || '🏅')}</span> <b>${esc(l.nombre)}</b> <small>(especial · ${lista(l.jugadores)})</small>: ${esc(l.desc || '')}</li>`);
   $('#lista-logros').innerHTML = LOGROS.map((l) => `<li><span>${l.icono}</span> <b>${esc(l.nombre)}:</b> ${esc(l.desc)}</li>`).concat(especiales).join('');
 }
 
