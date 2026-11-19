@@ -82,10 +82,10 @@
     }
   ],
   "flyer": {
-    "src": "fotos/flyers/fecha-4-resultado.webp",
+    "src": "fotos/flyers/fecha-5-resultado.webp",
     "ancho": 1100,
     "alto": 1375,
-    "alt": "Fecha 4: La Cabra (Viegas) aplasta al Lobo (Pipi), tirado en el césped bajo un bolso que dice 5 goles."
+    "alt": "Fecha 5: goleada histórica +18. Team Bau no tuvo piedad: Bona francotirador, Bau con un pato K.O., Facchina con la medalla de figura, Pipi llorando de alegría y Mona cargando a Juanse mientras pisa una cabra."
   },
   "galeria": [
     {
@@ -129,6 +129,12 @@
       "tipo": "resultado",
       "titulo": "La Cabra se comió al Lobo · 5 goles",
       "src": "fotos/flyers/fecha-4-resultado.webp"
+    },
+    {
+      "fecha": "2026-11-18",
+      "tipo": "resultado",
+      "titulo": "Goleada histórica +18 · Team Bau no tuvo piedad",
+      "src": "fotos/flyers/fecha-5-resultado.webp"
     }
   ],
   "capitanes": [
